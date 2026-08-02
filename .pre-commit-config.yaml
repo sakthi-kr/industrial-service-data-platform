@@ -1,0 +1,38 @@
+minimum_pre_commit_version: "3.7.0"
+fail_fast: false
+
+repos:
+  - repo: local
+    hooks:
+      - id: staged-diff-check
+        name: Check staged whitespace errors
+        entry: git diff --cached --check
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: ruff-check
+        name: Ruff lint
+        entry: python -m ruff check
+        language: system
+        types: [python]
+
+      - id: ruff-format
+        name: Ruff format check
+        entry: python -m ruff format --check
+        language: system
+        types: [python]
+
+      - id: mypy
+        name: Mypy type check
+        entry: python -m mypy src
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: pytest
+        name: Pytest
+        entry: python -m pytest
+        language: system
+        pass_filenames: false
+        always_run: true

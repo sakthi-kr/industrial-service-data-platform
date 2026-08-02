@@ -1,0 +1,18 @@
+# Normalise text files in the repository
+* text=auto
+
+# Keep source and configuration files consistent across operating systems
+*.py text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.sql text eol=lf
+*.json text eol=lf
+*.csv text eol=lf
+*.txt text eol=lf
+*.sh text eol=lf
+
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.env.example text eol=lf
