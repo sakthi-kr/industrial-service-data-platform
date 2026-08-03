@@ -1,0 +1,42 @@
+{
+  "configuration": {
+    "history_start": "2023-01-01T00:00:00Z",
+    "reporting_as_of": "2026-08-01T00:00:00Z",
+    "row_counts": {
+      "assets": 1000,
+      "customer_cases": 8000,
+      "customers": 150,
+      "equipment_alerts": 20000,
+      "parts": 300,
+      "service_contracts": 500,
+      "service_order_parts": 12000,
+      "service_orders": 6000,
+      "sites": 250,
+      "technician_notes": 5000,
+      "technicians": 100
+    },
+    "sample_rows_per_dataset": 10,
+    "seed": 20260803
+  },
+  "quality_signals": {
+    "alerts_linked_to_cases": 8139,
+    "delayed_part_lines": 3957,
+    "invalid_example_scenarios": 7
+  },
+  "row_counts": {
+    "assets": 1000,
+    "case_status_history": 37561,
+    "customer_cases": 8000,
+    "customers": 150,
+    "equipment_alerts": 20000,
+    "parts": 300,
+    "service_contracts": 500,
+    "service_costs": 16863,
+    "service_order_parts": 12000,
+    "service_orders": 6000,
+    "sites": 250,
+    "technician_notes": 5000,
+    "technicians": 100
+  },
+  "schema_version": "1.0.0"
+}

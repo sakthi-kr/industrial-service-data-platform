@@ -1,0 +1,53 @@
+{
+  "scenarios": [
+    {
+      "dataset": "assets",
+      "expected_code": "MISSING_REQUIRED_FIELD",
+      "file_name": "assets.csv",
+      "row_number": 1,
+      "scenario_id": "missing_asset_id"
+    },
+    {
+      "dataset": "customer_cases",
+      "expected_code": "INVALID_ENUM_VALUE",
+      "file_name": "customer_cases.csv",
+      "row_number": 1,
+      "scenario_id": "invalid_case_status"
+    },
+    {
+      "dataset": "customer_cases",
+      "expected_code": "UNKNOWN_FOREIGN_KEY",
+      "file_name": "customer_cases.csv",
+      "row_number": 2,
+      "scenario_id": "unknown_customer"
+    },
+    {
+      "dataset": "customer_cases",
+      "expected_code": "INVALID_TIMESTAMP_ORDER",
+      "file_name": "customer_cases.csv",
+      "row_number": 3,
+      "scenario_id": "impossible_case_timestamps"
+    },
+    {
+      "dataset": "service_orders",
+      "expected_code": "DUPLICATE_BUSINESS_KEY",
+      "file_name": "service_orders.csv",
+      "row_number": 1,
+      "scenario_id": "duplicate_service_order"
+    },
+    {
+      "dataset": "service_costs",
+      "expected_code": "NEGATIVE_MONETARY_VALUE",
+      "file_name": "service_costs.csv",
+      "row_number": 1,
+      "scenario_id": "negative_service_cost"
+    },
+    {
+      "dataset": "technician_notes",
+      "expected_code": "MALFORMED_TEXT",
+      "file_name": "technician_notes.csv",
+      "row_number": 1,
+      "scenario_id": "empty_technician_note"
+    }
+  ]
+}

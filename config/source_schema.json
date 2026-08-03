@@ -1,0 +1,1254 @@
+{
+  "schema_version": "1.0.0",
+  "datasets": {
+    "customers": {
+      "source_area": "ERP",
+      "file_name": "customers.csv",
+      "raw_table": "RAW.ERP_CUSTOMERS",
+      "staging_model": "stg_erp_customers",
+      "core_target": "CORE.DIM_CUSTOMER",
+      "business_key": [
+        "customer_id"
+      ],
+      "fields": [
+        {
+          "name": "customer_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable customer business identifier."
+        },
+        {
+          "name": "customer_name",
+          "type": "string",
+          "nullable": false,
+          "description": "Fictional organisation name."
+        },
+        {
+          "name": "industry",
+          "type": "string",
+          "nullable": false,
+          "description": "Customer industry grouping.",
+          "allowed_values": [
+            "ENERGY",
+            "CHEMICALS",
+            "MANUFACTURING",
+            "MINING",
+            "UTILITIES"
+          ]
+        },
+        {
+          "name": "customer_region",
+          "type": "string",
+          "nullable": false,
+          "description": "Commercial region assigned to the customer.",
+          "allowed_values": [
+            "NORTH",
+            "SOUTH",
+            "EAST",
+            "WEST",
+            "CENTRAL"
+          ]
+        },
+        {
+          "name": "customer_status",
+          "type": "string",
+          "nullable": false,
+          "description": "Current customer status.",
+          "allowed_values": [
+            "ACTIVE",
+            "INACTIVE"
+          ]
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp when the source record was created."
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp of the latest source update."
+        }
+      ]
+    },
+    "sites": {
+      "source_area": "ERP",
+      "file_name": "sites.csv",
+      "raw_table": "RAW.ERP_SITES",
+      "staging_model": "stg_erp_sites",
+      "core_target": "CORE.DIM_SITE",
+      "business_key": [
+        "site_id"
+      ],
+      "fields": [
+        {
+          "name": "site_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable site business identifier."
+        },
+        {
+          "name": "customer_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Customer that owns or operates the site.",
+          "references": "customers.customer_id"
+        },
+        {
+          "name": "site_name",
+          "type": "string",
+          "nullable": false,
+          "description": "Fictional site name."
+        },
+        {
+          "name": "country_code",
+          "type": "string",
+          "nullable": false,
+          "description": "Uppercase two-letter country code."
+        },
+        {
+          "name": "region",
+          "type": "string",
+          "nullable": false,
+          "description": "Operational service region.",
+          "allowed_values": [
+            "NORTH",
+            "SOUTH",
+            "EAST",
+            "WEST",
+            "CENTRAL"
+          ]
+        },
+        {
+          "name": "timezone",
+          "type": "string",
+          "nullable": false,
+          "description": "IANA-style time-zone name for the site."
+        },
+        {
+          "name": "site_status",
+          "type": "string",
+          "nullable": false,
+          "description": "Current site status.",
+          "allowed_values": [
+            "ACTIVE",
+            "INACTIVE"
+          ]
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp when the source record was created."
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp of the latest source update."
+        }
+      ]
+    },
+    "assets": {
+      "source_area": "ERP",
+      "file_name": "assets.csv",
+      "raw_table": "RAW.ERP_ASSETS",
+      "staging_model": "stg_erp_assets",
+      "core_target": "CORE.DIM_ASSET",
+      "business_key": [
+        "asset_id"
+      ],
+      "fields": [
+        {
+          "name": "asset_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable asset business identifier."
+        },
+        {
+          "name": "site_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Site where the asset is installed.",
+          "references": "sites.site_id"
+        },
+        {
+          "name": "asset_name",
+          "type": "string",
+          "nullable": false,
+          "description": "Readable asset label."
+        },
+        {
+          "name": "asset_type",
+          "type": "string",
+          "nullable": false,
+          "description": "Controlled equipment type.",
+          "allowed_values": [
+            "GAS_TURBINE",
+            "STEAM_TURBINE",
+            "COMPRESSOR",
+            "INDUSTRIAL_PUMP"
+          ]
+        },
+        {
+          "name": "manufacturer",
+          "type": "string",
+          "nullable": false,
+          "description": "Fictional equipment manufacturer."
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "nullable": false,
+          "description": "Equipment model designation."
+        },
+        {
+          "name": "serial_number",
+          "type": "string",
+          "nullable": false,
+          "description": "Unique source serial number."
+        },
+        {
+          "name": "installation_date",
+          "type": "date",
+          "nullable": false,
+          "description": "Date the asset entered service."
+        },
+        {
+          "name": "criticality",
+          "type": "string",
+          "nullable": false,
+          "description": "Operational importance of the asset.",
+          "allowed_values": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL"
+          ]
+        },
+        {
+          "name": "asset_status",
+          "type": "string",
+          "nullable": false,
+          "description": "Current asset lifecycle status.",
+          "allowed_values": [
+            "ACTIVE",
+            "OUT_OF_SERVICE",
+            "RETIRED"
+          ]
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp when the source record was created."
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp of the latest source update."
+        }
+      ]
+    },
+    "service_contracts": {
+      "source_area": "CRM",
+      "file_name": "service_contracts.csv",
+      "raw_table": "RAW.CRM_SERVICE_CONTRACTS",
+      "staging_model": "stg_crm_service_contracts",
+      "core_target": "CORE.DIM_SERVICE_CONTRACT",
+      "business_key": [
+        "contract_id"
+      ],
+      "fields": [
+        {
+          "name": "contract_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable service-contract business identifier."
+        },
+        {
+          "name": "customer_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Customer covered by the contract.",
+          "references": "customers.customer_id"
+        },
+        {
+          "name": "site_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Site covered by the contract.",
+          "references": "sites.site_id"
+        },
+        {
+          "name": "contract_type",
+          "type": "string",
+          "nullable": false,
+          "description": "Service coverage level.",
+          "allowed_values": [
+            "BASIC",
+            "STANDARD",
+            "PREMIUM"
+          ]
+        },
+        {
+          "name": "start_date",
+          "type": "date",
+          "nullable": false,
+          "description": "Contract start date."
+        },
+        {
+          "name": "end_date",
+          "type": "date",
+          "nullable": false,
+          "description": "Contract end date."
+        },
+        {
+          "name": "response_sla_hours",
+          "type": "integer",
+          "nullable": false,
+          "description": "Allowed elapsed hours to first response."
+        },
+        {
+          "name": "resolution_sla_hours",
+          "type": "integer",
+          "nullable": false,
+          "description": "Allowed elapsed hours to case resolution."
+        },
+        {
+          "name": "contract_status",
+          "type": "string",
+          "nullable": false,
+          "description": "Current contract status.",
+          "allowed_values": [
+            "DRAFT",
+            "ACTIVE",
+            "EXPIRED",
+            "CANCELLED"
+          ]
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp when the source record was created."
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp of the latest source update."
+        }
+      ]
+    },
+    "customer_cases": {
+      "source_area": "CRM",
+      "file_name": "customer_cases.csv",
+      "raw_table": "RAW.CRM_CUSTOMER_CASES",
+      "staging_model": "stg_crm_customer_cases",
+      "core_target": "CORE.FACT_SERVICE_CASE",
+      "business_key": [
+        "case_id"
+      ],
+      "fields": [
+        {
+          "name": "case_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable case business identifier."
+        },
+        {
+          "name": "customer_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Customer that raised the case.",
+          "references": "customers.customer_id"
+        },
+        {
+          "name": "site_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Site associated with the case.",
+          "references": "sites.site_id"
+        },
+        {
+          "name": "contract_id",
+          "type": "string",
+          "nullable": true,
+          "description": "Applicable service contract when one exists.",
+          "references": "service_contracts.contract_id"
+        },
+        {
+          "name": "asset_id",
+          "type": "string",
+          "nullable": true,
+          "description": "Asset associated with the case when relevant.",
+          "references": "assets.asset_id"
+        },
+        {
+          "name": "case_type",
+          "type": "string",
+          "nullable": false,
+          "description": "Reason the case was opened.",
+          "allowed_values": [
+            "TECHNICAL_FAULT",
+            "INSPECTION_REQUEST",
+            "MAINTENANCE_REQUEST",
+            "GENERAL_ENQUIRY"
+          ]
+        },
+        {
+          "name": "priority",
+          "type": "string",
+          "nullable": false,
+          "description": "Operational priority assigned to the case.",
+          "allowed_values": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL"
+          ]
+        },
+        {
+          "name": "fault_category",
+          "type": "string",
+          "nullable": true,
+          "description": "Controlled fault category when the case concerns equipment.",
+          "allowed_values": [
+            "BEARING",
+            "VIBRATION",
+            "OVERHEATING",
+            "LUBRICATION",
+            "SEAL",
+            "ELECTRICAL",
+            "CONTROL_SYSTEM",
+            "PRESSURE",
+            "FLOW",
+            "INSPECTION",
+            "OTHER"
+          ]
+        },
+        {
+          "name": "case_status",
+          "type": "string",
+          "nullable": false,
+          "description": "Current case status.",
+          "allowed_values": [
+            "OPEN",
+            "ASSIGNED",
+            "IN_PROGRESS",
+            "WAITING_PARTS",
+            "RESOLVED",
+            "CLOSED",
+            "CANCELLED"
+          ]
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Case creation timestamp."
+        },
+        {
+          "name": "response_due_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Deadline for the first response."
+        },
+        {
+          "name": "resolution_due_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Deadline for case resolution."
+        },
+        {
+          "name": "first_response_at",
+          "type": "timestamp_utc",
+          "nullable": true,
+          "description": "Timestamp of the first recorded response."
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp_utc",
+          "nullable": true,
+          "description": "Timestamp of the first valid resolution."
+        },
+        {
+          "name": "closed_at",
+          "type": "timestamp_utc",
+          "nullable": true,
+          "description": "Timestamp when the case was closed."
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp of the latest source update."
+        }
+      ]
+    },
+    "case_status_history": {
+      "source_area": "CRM",
+      "file_name": "case_status_history.csv",
+      "raw_table": "RAW.CRM_CASE_STATUS_HISTORY",
+      "staging_model": "stg_crm_case_status_history",
+      "core_target": "CORE.FACT_CASE_STATUS_EVENT",
+      "business_key": [
+        "case_status_event_id"
+      ],
+      "fields": [
+        {
+          "name": "case_status_event_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable status-event business identifier."
+        },
+        {
+          "name": "case_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Case affected by the status change.",
+          "references": "customer_cases.case_id"
+        },
+        {
+          "name": "previous_status",
+          "type": "string",
+          "nullable": true,
+          "description": "Status before the change; null for the first event.",
+          "allowed_values": [
+            "OPEN",
+            "ASSIGNED",
+            "IN_PROGRESS",
+            "WAITING_PARTS",
+            "RESOLVED",
+            "CLOSED",
+            "CANCELLED"
+          ]
+        },
+        {
+          "name": "new_status",
+          "type": "string",
+          "nullable": false,
+          "description": "Status after the change.",
+          "allowed_values": [
+            "OPEN",
+            "ASSIGNED",
+            "IN_PROGRESS",
+            "WAITING_PARTS",
+            "RESOLVED",
+            "CLOSED",
+            "CANCELLED"
+          ]
+        },
+        {
+          "name": "changed_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp when the status changed."
+        },
+        {
+          "name": "change_reason",
+          "type": "string",
+          "nullable": false,
+          "description": "Short explanation recorded with the transition."
+        }
+      ]
+    },
+    "technicians": {
+      "source_area": "ERP",
+      "file_name": "technicians.csv",
+      "raw_table": "RAW.ERP_TECHNICIANS",
+      "staging_model": "stg_erp_technicians",
+      "core_target": "CORE.DIM_TECHNICIAN",
+      "business_key": [
+        "technician_id"
+      ],
+      "fields": [
+        {
+          "name": "technician_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable technician business identifier."
+        },
+        {
+          "name": "technician_name",
+          "type": "string",
+          "nullable": false,
+          "description": "Fictional technician name."
+        },
+        {
+          "name": "home_region",
+          "type": "string",
+          "nullable": false,
+          "description": "Technician's normal service region.",
+          "allowed_values": [
+            "NORTH",
+            "SOUTH",
+            "EAST",
+            "WEST",
+            "CENTRAL"
+          ]
+        },
+        {
+          "name": "specialisation",
+          "type": "string",
+          "nullable": false,
+          "description": "Primary technical specialisation.",
+          "allowed_values": [
+            "ROTATING_EQUIPMENT",
+            "ELECTRICAL",
+            "CONTROLS",
+            "INSTRUMENTATION",
+            "GENERAL"
+          ]
+        },
+        {
+          "name": "skill_level",
+          "type": "string",
+          "nullable": false,
+          "description": "Experience band used for generated assignments.",
+          "allowed_values": [
+            "JUNIOR",
+            "INTERMEDIATE",
+            "SENIOR",
+            "EXPERT"
+          ]
+        },
+        {
+          "name": "technician_status",
+          "type": "string",
+          "nullable": false,
+          "description": "Current technician status.",
+          "allowed_values": [
+            "ACTIVE",
+            "INACTIVE"
+          ]
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp when the source record was created."
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp of the latest source update."
+        }
+      ]
+    },
+    "service_orders": {
+      "source_area": "ERP",
+      "file_name": "service_orders.csv",
+      "raw_table": "RAW.ERP_SERVICE_ORDERS",
+      "staging_model": "stg_erp_service_orders",
+      "core_target": "CORE.FACT_SERVICE_ORDER",
+      "business_key": [
+        "service_order_id"
+      ],
+      "fields": [
+        {
+          "name": "service_order_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable service-order business identifier."
+        },
+        {
+          "name": "case_id",
+          "type": "string",
+          "nullable": true,
+          "description": "Related customer case when the order is reactive.",
+          "references": "customer_cases.case_id"
+        },
+        {
+          "name": "asset_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Asset receiving the service work.",
+          "references": "assets.asset_id"
+        },
+        {
+          "name": "lead_technician_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Lead technician assigned to the order.",
+          "references": "technicians.technician_id"
+        },
+        {
+          "name": "order_type",
+          "type": "string",
+          "nullable": false,
+          "description": "Type of service activity.",
+          "allowed_values": [
+            "INSPECTION",
+            "CORRECTIVE_REPAIR",
+            "PREVENTIVE_MAINTENANCE",
+            "EMERGENCY_REPAIR"
+          ]
+        },
+        {
+          "name": "order_status",
+          "type": "string",
+          "nullable": false,
+          "description": "Current service-order status.",
+          "allowed_values": [
+            "PLANNED",
+            "DISPATCHED",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "CANCELLED"
+          ]
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Service-order creation timestamp."
+        },
+        {
+          "name": "scheduled_start_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Planned start timestamp."
+        },
+        {
+          "name": "actual_start_at",
+          "type": "timestamp_utc",
+          "nullable": true,
+          "description": "Actual start timestamp when work has begun."
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp_utc",
+          "nullable": true,
+          "description": "Completion timestamp for completed work."
+        },
+        {
+          "name": "downtime_start_at",
+          "type": "timestamp_utc",
+          "nullable": true,
+          "description": "Start of the associated equipment downtime interval."
+        },
+        {
+          "name": "downtime_end_at",
+          "type": "timestamp_utc",
+          "nullable": true,
+          "description": "End of the associated equipment downtime interval."
+        },
+        {
+          "name": "resolution_code",
+          "type": "string",
+          "nullable": true,
+          "description": "Outcome recorded when the order is completed.",
+          "allowed_values": [
+            "FIXED",
+            "ADJUSTED",
+            "REPLACED_COMPONENT",
+            "NO_FAULT_FOUND",
+            "FOLLOW_UP_REQUIRED",
+            "NOT_COMPLETED"
+          ]
+        },
+        {
+          "name": "created_by_source",
+          "type": "string",
+          "nullable": false,
+          "description": "Source process that created the service order.",
+          "allowed_values": [
+            "CRM_CASE",
+            "PLANNED_MAINTENANCE",
+            "MONITORING_ALERT"
+          ]
+        }
+      ]
+    },
+    "parts": {
+      "source_area": "ERP",
+      "file_name": "parts.csv",
+      "raw_table": "RAW.ERP_PARTS",
+      "staging_model": "stg_erp_parts",
+      "core_target": "CORE.DIM_PART",
+      "business_key": [
+        "part_id"
+      ],
+      "fields": [
+        {
+          "name": "part_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable part business identifier."
+        },
+        {
+          "name": "part_name",
+          "type": "string",
+          "nullable": false,
+          "description": "Fictional spare-part name."
+        },
+        {
+          "name": "part_category",
+          "type": "string",
+          "nullable": false,
+          "description": "Controlled spare-part category.",
+          "allowed_values": [
+            "BEARING",
+            "SEAL",
+            "LUBRICATION",
+            "ELECTRICAL",
+            "CONTROL",
+            "VALVE",
+            "FILTER",
+            "FASTENER",
+            "OTHER"
+          ]
+        },
+        {
+          "name": "unit_cost_eur",
+          "type": "decimal_18_2",
+          "nullable": false,
+          "description": "Standard unit cost in EUR."
+        },
+        {
+          "name": "standard_lead_time_days",
+          "type": "integer",
+          "nullable": false,
+          "description": "Expected supplier lead time in elapsed days."
+        },
+        {
+          "name": "part_status",
+          "type": "string",
+          "nullable": false,
+          "description": "Current part status.",
+          "allowed_values": [
+            "ACTIVE",
+            "OBSOLETE"
+          ]
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp when the source record was created."
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp of the latest source update."
+        }
+      ]
+    },
+    "service_order_parts": {
+      "source_area": "ERP",
+      "file_name": "service_order_parts.csv",
+      "raw_table": "RAW.ERP_SERVICE_ORDER_PARTS",
+      "staging_model": "stg_erp_service_order_parts",
+      "core_target": "CORE.FACT_SERVICE_ORDER_PART",
+      "business_key": [
+        "service_order_id",
+        "part_id",
+        "line_number"
+      ],
+      "fields": [
+        {
+          "name": "service_order_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Service order that requested or used the part.",
+          "references": "service_orders.service_order_id"
+        },
+        {
+          "name": "part_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Requested or consumed part.",
+          "references": "parts.part_id"
+        },
+        {
+          "name": "line_number",
+          "type": "integer",
+          "nullable": false,
+          "description": "Line number unique within the order and part combination."
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "nullable": false,
+          "description": "Positive quantity requested."
+        },
+        {
+          "name": "requested_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp when the part was requested."
+        },
+        {
+          "name": "required_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp by which the part was required."
+        },
+        {
+          "name": "delivered_at",
+          "type": "timestamp_utc",
+          "nullable": true,
+          "description": "Actual delivery timestamp; null while outstanding."
+        },
+        {
+          "name": "unit_cost_eur",
+          "type": "decimal_18_2",
+          "nullable": false,
+          "description": "Unit cost recorded on the service-order line."
+        }
+      ]
+    },
+    "service_costs": {
+      "source_area": "ERP",
+      "file_name": "service_costs.csv",
+      "raw_table": "RAW.ERP_SERVICE_COSTS",
+      "staging_model": "stg_erp_service_costs",
+      "core_target": "CORE.FACT_SERVICE_COST",
+      "business_key": [
+        "service_cost_id"
+      ],
+      "fields": [
+        {
+          "name": "service_cost_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable service-cost transaction identifier."
+        },
+        {
+          "name": "service_order_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Service order receiving the cost.",
+          "references": "service_orders.service_order_id"
+        },
+        {
+          "name": "cost_type",
+          "type": "string",
+          "nullable": false,
+          "description": "Type of service expenditure.",
+          "allowed_values": [
+            "LABOUR",
+            "TRAVEL",
+            "PART",
+            "EXTERNAL_SERVICE"
+          ]
+        },
+        {
+          "name": "cost_amount_eur",
+          "type": "decimal_18_2",
+          "nullable": false,
+          "description": "Transaction amount in EUR."
+        },
+        {
+          "name": "cost_recorded_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp when the cost was recorded."
+        }
+      ]
+    },
+    "equipment_alerts": {
+      "source_area": "Monitoring",
+      "file_name": "equipment_alerts.csv",
+      "raw_table": "RAW.MONITORING_EQUIPMENT_ALERTS",
+      "staging_model": "stg_monitoring_equipment_alerts",
+      "core_target": "CORE.FACT_EQUIPMENT_ALERT",
+      "business_key": [
+        "alert_id"
+      ],
+      "fields": [
+        {
+          "name": "alert_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable alert business identifier."
+        },
+        {
+          "name": "asset_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Asset that generated the alert.",
+          "references": "assets.asset_id"
+        },
+        {
+          "name": "related_case_id",
+          "type": "string",
+          "nullable": true,
+          "description": "Customer case explicitly linked to the alert.",
+          "references": "customer_cases.case_id"
+        },
+        {
+          "name": "alert_type",
+          "type": "string",
+          "nullable": false,
+          "description": "Condition represented by the alert.",
+          "allowed_values": [
+            "VIBRATION",
+            "TEMPERATURE",
+            "PRESSURE",
+            "FLOW",
+            "LUBRICATION",
+            "ELECTRICAL",
+            "CONTROL_SYSTEM"
+          ]
+        },
+        {
+          "name": "severity",
+          "type": "string",
+          "nullable": false,
+          "description": "Operational severity of the alert.",
+          "allowed_values": [
+            "INFO",
+            "WARNING",
+            "CRITICAL"
+          ]
+        },
+        {
+          "name": "alert_status",
+          "type": "string",
+          "nullable": false,
+          "description": "Current alert state.",
+          "allowed_values": [
+            "OPEN",
+            "ACKNOWLEDGED",
+            "CLEARED"
+          ]
+        },
+        {
+          "name": "raised_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp when the alert was raised."
+        },
+        {
+          "name": "acknowledged_at",
+          "type": "timestamp_utc",
+          "nullable": true,
+          "description": "Timestamp of manual or automatic acknowledgement."
+        },
+        {
+          "name": "cleared_at",
+          "type": "timestamp_utc",
+          "nullable": true,
+          "description": "Timestamp when the alert was cleared."
+        },
+        {
+          "name": "measured_value",
+          "type": "decimal_18_6",
+          "nullable": true,
+          "description": "Measured value when the alert is numeric."
+        },
+        {
+          "name": "threshold_value",
+          "type": "decimal_18_6",
+          "nullable": true,
+          "description": "Configured threshold when the alert is numeric."
+        },
+        {
+          "name": "measurement_unit",
+          "type": "string",
+          "nullable": true,
+          "description": "Unit used for measured and threshold values."
+        }
+      ]
+    },
+    "technician_notes": {
+      "source_area": "Field service",
+      "file_name": "technician_notes.csv",
+      "raw_table": "RAW.FIELD_SERVICE_TECHNICIAN_NOTES",
+      "staging_model": "stg_field_service_technician_notes",
+      "core_target": "CORE.FACT_TECHNICIAN_NOTE",
+      "business_key": [
+        "note_id"
+      ],
+      "fields": [
+        {
+          "name": "note_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Stable note business identifier."
+        },
+        {
+          "name": "service_order_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Service order documented by the note.",
+          "references": "service_orders.service_order_id"
+        },
+        {
+          "name": "technician_id",
+          "type": "string",
+          "nullable": false,
+          "description": "Technician who authored the note.",
+          "references": "technicians.technician_id"
+        },
+        {
+          "name": "note_type",
+          "type": "string",
+          "nullable": false,
+          "description": "Stage of field work represented by the note.",
+          "allowed_values": [
+            "INSPECTION",
+            "DIAGNOSIS",
+            "REPAIR",
+            "COMPLETION"
+          ]
+        },
+        {
+          "name": "note_text",
+          "type": "string",
+          "nullable": false,
+          "description": "Original free-text field-service observation."
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp_utc",
+          "nullable": false,
+          "description": "Timestamp when the note was created."
+        }
+      ]
+    }
+  },
+  "relationships": [
+    {
+      "parent": "customers",
+      "child": "sites",
+      "child_field": "customer_id",
+      "connector": "||--o{",
+      "label": "owns"
+    },
+    {
+      "parent": "customers",
+      "child": "service_contracts",
+      "child_field": "customer_id",
+      "connector": "||--o{",
+      "label": "holds"
+    },
+    {
+      "parent": "sites",
+      "child": "service_contracts",
+      "child_field": "site_id",
+      "connector": "||--o{",
+      "label": "covered by"
+    },
+    {
+      "parent": "sites",
+      "child": "assets",
+      "child_field": "site_id",
+      "connector": "||--o{",
+      "label": "contains"
+    },
+    {
+      "parent": "customers",
+      "child": "customer_cases",
+      "child_field": "customer_id",
+      "connector": "||--o{",
+      "label": "raises"
+    },
+    {
+      "parent": "sites",
+      "child": "customer_cases",
+      "child_field": "site_id",
+      "connector": "||--o{",
+      "label": "reports"
+    },
+    {
+      "parent": "service_contracts",
+      "child": "customer_cases",
+      "child_field": "contract_id",
+      "connector": "o|--o{",
+      "label": "governs"
+    },
+    {
+      "parent": "assets",
+      "child": "customer_cases",
+      "child_field": "asset_id",
+      "connector": "o|--o{",
+      "label": "concerns"
+    },
+    {
+      "parent": "customer_cases",
+      "child": "case_status_history",
+      "child_field": "case_id",
+      "connector": "||--|{",
+      "label": "has history"
+    },
+    {
+      "parent": "customer_cases",
+      "child": "service_orders",
+      "child_field": "case_id",
+      "connector": "o|--o{",
+      "label": "creates"
+    },
+    {
+      "parent": "assets",
+      "child": "service_orders",
+      "child_field": "asset_id",
+      "connector": "||--o{",
+      "label": "receives"
+    },
+    {
+      "parent": "technicians",
+      "child": "service_orders",
+      "child_field": "lead_technician_id",
+      "connector": "||--o{",
+      "label": "leads"
+    },
+    {
+      "parent": "service_orders",
+      "child": "service_order_parts",
+      "child_field": "service_order_id",
+      "connector": "||--o{",
+      "label": "uses"
+    },
+    {
+      "parent": "parts",
+      "child": "service_order_parts",
+      "child_field": "part_id",
+      "connector": "||--o{",
+      "label": "appears on"
+    },
+    {
+      "parent": "service_orders",
+      "child": "service_costs",
+      "child_field": "service_order_id",
+      "connector": "||--o{",
+      "label": "incurs"
+    },
+    {
+      "parent": "assets",
+      "child": "equipment_alerts",
+      "child_field": "asset_id",
+      "connector": "||--o{",
+      "label": "generates"
+    },
+    {
+      "parent": "customer_cases",
+      "child": "equipment_alerts",
+      "child_field": "related_case_id",
+      "connector": "o|--o{",
+      "label": "linked to"
+    },
+    {
+      "parent": "service_orders",
+      "child": "technician_notes",
+      "child_field": "service_order_id",
+      "connector": "||--o{",
+      "label": "documents"
+    },
+    {
+      "parent": "technicians",
+      "child": "technician_notes",
+      "child_field": "technician_id",
+      "connector": "||--o{",
+      "label": "writes"
+    }
+  ]
+}

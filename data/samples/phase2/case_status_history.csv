@@ -1,0 +1,11 @@
+case_status_event_id,case_id,previous_status,new_status,changed_at,change_reason
+CSEVT-000001,CASE-000001,,OPEN,2024-04-07T20:13:27Z,Case created from source request.
+CSEVT-000002,CASE-000001,OPEN,ASSIGNED,2024-04-08T13:42:49Z,Case assigned to the service team.
+CSEVT-000003,CASE-000001,ASSIGNED,IN_PROGRESS,2024-04-09T07:12:12Z,Technical work started.
+CSEVT-000004,CASE-000001,IN_PROGRESS,RESOLVED,2024-04-10T00:41:34Z,Technical resolution recorded.
+CSEVT-000005,CASE-000001,RESOLVED,CLOSED,2024-04-10T18:10:57Z,Customer case closed after resolution.
+CSEVT-000006,CASE-000002,,OPEN,2024-10-31T10:43:10Z,Case created from source request.
+CSEVT-000007,CASE-000002,OPEN,ASSIGNED,2024-10-31T17:50:56Z,Case assigned to the service team.
+CSEVT-000008,CASE-000002,ASSIGNED,IN_PROGRESS,2024-11-01T00:58:43Z,Technical work started.
+CSEVT-000009,CASE-000002,IN_PROGRESS,WAITING_PARTS,2024-11-01T08:06:30Z,Work paused while required parts are obtained.
+CSEVT-000010,CASE-000003,,OPEN,2025-01-13T01:33:49Z,Case created from source request.

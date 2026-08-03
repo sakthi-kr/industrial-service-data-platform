@@ -1,0 +1,107 @@
+{
+  "configuration": {
+    "history_start": "2023-01-01T00:00:00Z",
+    "reporting_as_of": "2026-08-01T00:00:00Z",
+    "row_counts": {
+      "assets": 1000,
+      "customer_cases": 8000,
+      "customers": 150,
+      "equipment_alerts": 20000,
+      "parts": 300,
+      "service_contracts": 500,
+      "service_order_parts": 12000,
+      "service_orders": 6000,
+      "sites": 250,
+      "technician_notes": 5000,
+      "technicians": 100
+    },
+    "sample_rows_per_dataset": 10,
+    "seed": 20260803
+  },
+  "files": [
+    {
+      "path": "assets.csv",
+      "sha256": "32024e896f0cfc277c3b7114942187d51681f68fc992899a0c688fb588085d00"
+    },
+    {
+      "path": "case_status_history.csv",
+      "sha256": "f7ae3a61a46b6f2ff7895693b9a928a5787bf33388ac416e5ac1d66910451752"
+    },
+    {
+      "path": "customer_cases.csv",
+      "sha256": "afe7371703819678f16cee5375431d027e841554a5e98463957e587f33287564"
+    },
+    {
+      "path": "customers.csv",
+      "sha256": "e5d6312eb1073caa71fa3eec4a6f87eb971640a193a6ea5df1a80b23c1ffed18"
+    },
+    {
+      "path": "equipment_alerts.csv",
+      "sha256": "9b7e8ebe4dfc0ed1902647e0dfab18cabd5a1a543d0477225b176f782fab8906"
+    },
+    {
+      "path": "generation_summary.json",
+      "sha256": "0c15f05d8a3db5a6d5d08c81a9997641f5110a55d9745984864121ce47cf8b4e"
+    },
+    {
+      "path": "invalid/assets.csv",
+      "sha256": "577bc083c04ee81a6fd8db81fa0e41248703164783d4e2bedb90cd3c35a8a2ee"
+    },
+    {
+      "path": "invalid/customer_cases.csv",
+      "sha256": "de59e3696c61d0282e4a92237e4264b3f33eea4e1ee6d39bfac8d079aa44b40a"
+    },
+    {
+      "path": "invalid/invalid_manifest.json",
+      "sha256": "7379cc70bde91eddcb77cf35975f883d9bca63ea753bd7e4c7ab5e75453a9bf9"
+    },
+    {
+      "path": "invalid/service_costs.csv",
+      "sha256": "b35cc158ac347ff84e058615f806ef90d63ade00fc7b2d1e1f0cf73aff8259c9"
+    },
+    {
+      "path": "invalid/service_orders.csv",
+      "sha256": "3ae4210e2585b000759bc9f12cf07bec32fa489980797c07f0c924c52cad54e9"
+    },
+    {
+      "path": "invalid/technician_notes.csv",
+      "sha256": "5b4ddb675c40e76ab30187298e8f5333bebc8bac15aea61a60d073a9522f574a"
+    },
+    {
+      "path": "parts.csv",
+      "sha256": "368f6016c9de0a32c95645f7ca1b4f93b4892486a0261593bb2dcdb247e06357"
+    },
+    {
+      "path": "service_contracts.csv",
+      "sha256": "398da8458c93cfc70c6cc9e32f87a7499017648a062b242007d5db68a897da05"
+    },
+    {
+      "path": "service_costs.csv",
+      "sha256": "cdde98ff27e44b5507a4e357aa228d4d81529a59dad205601c16027ab6daf12a"
+    },
+    {
+      "path": "service_order_parts.csv",
+      "sha256": "e2cc4716b4305aa72fb37e41f572a3824c97ae1a95409f76b36bf4102763199f"
+    },
+    {
+      "path": "service_orders.csv",
+      "sha256": "bb340fbbcc328c1567576245b755daa86b6a05db9c278dafce56acaed60d4ae5"
+    },
+    {
+      "path": "sites.csv",
+      "sha256": "2b81f517e8b7ff2fe5ddd6944099335051a23607e5f0281d90abc03af4cc5dbc"
+    },
+    {
+      "path": "technician_notes.csv",
+      "sha256": "e3be252662ca2739358837c177db8799b1ba1459651bc63427b3f69ae82c509f"
+    },
+    {
+      "path": "technicians.csv",
+      "sha256": "54f3a5c141e45d581c1ad0fa50e29660ee9fd71dfe89c11b7de85d0418f08587"
+    },
+    {
+      "path": "validation_report.json",
+      "sha256": "0519e6abd2bd25b03eea0691d1b3cabf8e16b656adfadbfbcf108fcf35767a66"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+service_order_id,case_id,asset_id,lead_technician_id,order_type,order_status,created_at,scheduled_start_at,actual_start_at,completed_at,downtime_start_at,downtime_end_at,resolution_code,created_by_source
+SORD-000001,CASE-003139,ASSET-000893,TECH-000001,CORRECTIVE_REPAIR,DISPATCHED,2026-06-06T13:07:45Z,2026-06-09T01:27:58Z,,,,,,CRM_CASE

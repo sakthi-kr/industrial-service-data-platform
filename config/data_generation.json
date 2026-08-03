@@ -1,0 +1,21 @@
+{
+  "seed": 20260803,
+  "history_start": "2023-01-01T00:00:00Z",
+  "reporting_as_of": "2026-08-01T00:00:00Z",
+  "output_directory": "data/generated",
+  "sample_directory": "data/samples/phase2",
+  "sample_rows_per_dataset": 10,
+  "row_counts": {
+    "assets": 1000,
+    "customer_cases": 8000,
+    "customers": 150,
+    "equipment_alerts": 20000,
+    "parts": 300,
+    "service_contracts": 500,
+    "service_order_parts": 12000,
+    "service_orders": 6000,
+    "sites": 250,
+    "technician_notes": 5000,
+    "technicians": 100
+  }
+}

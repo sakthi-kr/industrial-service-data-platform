@@ -1,0 +1,2 @@
+note_id,service_order_id,technician_id,note_type,note_text,created_at
+NOTE-INVALID-EMPTY,SORD-005269,TECH-000002,INSPECTION,,2024-12-24T20:32:30Z

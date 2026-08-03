@@ -6,9 +6,13 @@ The project uses synthetic data. It is not intended to reproduce a full ERP or C
 
 ## Project status
 
-The repository is currently in Phase 0: project setup. The Python package structure, local development tools, test configuration, and repository checks are being established before the data model is added.
+Phases 0, 1, and 2 are complete. The repository now includes the development setup, documented
+business and data model, deterministic synthetic source datasets, schema and relationship checks,
+controlled invalid examples, tracked samples, and reproducibility manifests.
 
-No Snowflake, dbt, Power BI, or AI implementation is complete yet. Those parts will be added in later phases and documented as they become reproducible.
+The next phase will create the Snowflake database, schemas, warehouse, roles, and grants. dbt,
+Power BI, and technician-note enrichment will be added after the ingestion and warehouse layers are
+working.
 
 ## Planned data flow
 
@@ -69,6 +73,18 @@ Run the local checks with:
 Run all configured pre-commit checks with:
 
     pre-commit run --all-files
+
+## Synthetic data generation
+
+The default configuration generates the full ERP-, CRM-, monitoring-, and field-service-style
+source files locally. Generated files are excluded from Git; small samples and validation metadata
+are kept in `data/samples/phase2/`.
+
+    python -m industrial_service_platform generate-data
+    python -m industrial_service_platform validate-data
+
+The generator uses a fixed seed and reporting timestamp. Repeated runs with the same configuration
+produce the same file content and SHA-256 hashes.
 
 ## Project phases
 

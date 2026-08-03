@@ -1,0 +1,2 @@
+service_cost_id,service_order_id,cost_type,cost_amount_eur,cost_recorded_at
+COST-INVALID-NEGATIVE,SORD-000001,LABOUR,-150.00,2026-06-09T01:27:58Z

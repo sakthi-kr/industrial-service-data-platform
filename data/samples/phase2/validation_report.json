@@ -1,0 +1,20 @@
+{
+  "is_valid": true,
+  "issue_count": 0,
+  "issues": [],
+  "row_counts": {
+    "assets": 1000,
+    "case_status_history": 37561,
+    "customer_cases": 8000,
+    "customers": 150,
+    "equipment_alerts": 20000,
+    "parts": 300,
+    "service_contracts": 500,
+    "service_costs": 16863,
+    "service_order_parts": 12000,
+    "service_orders": 6000,
+    "sites": 250,
+    "technician_notes": 5000,
+    "technicians": 100
+  }
+}

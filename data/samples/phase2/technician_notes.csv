@@ -1,0 +1,11 @@
+note_id,service_order_id,technician_id,note_type,note_text,created_at
+NOTE-000001,SORD-005269,TECH-000002,INSPECTION,Visual and functional inspection completed. The drive-end bearing showed signs consistent with bearing; readings were recorded for follow-up.,2024-12-24T20:32:30Z
+NOTE-000002,SORD-003669,TECH-000086,COMPLETION,Service order completed with resolution code REPLACED_COMPONENT. The equipment was returned to the agreed operating state and the customer contact was informed.,2024-01-30T23:41:24Z
+NOTE-000003,SORD-000376,TECH-000018,REPAIR,"Serviced the flow path and filter, replaced worn consumables where required, and repeated the operating checks. The flow reading returned toward the expected range.",2025-06-14T11:17:28Z
+NOTE-000004,SORD-002102,TECH-000053,COMPLETION,Final checks completed after work on the pressure regulation valve. No immediate recurrence of the pressure condition was observed.,2026-05-08T09:01:12Z
+NOTE-000005,SORD-004701,TECH-000036,COMPLETION,Service order completed with resolution code FIXED. The equipment was returned to the agreed operating state and the customer contact was informed.,2025-12-08T16:20:03Z
+NOTE-000006,SORD-002380,TECH-000038,DIAGNOSIS,The lubrication condition was reproduced during the test run. Checks point to the lubrication system rather than an upstream process change.,2023-09-17T01:36:30Z
+NOTE-000007,SORD-003347,TECH-000085,COMPLETION,Final checks completed after work on the external casing and mounts. No immediate recurrence of the inspection condition was observed.,2024-10-26T14:51:19Z
+NOTE-000008,SORD-005901,TECH-000043,REPAIR,"Serviced the external casing and mounts, replaced worn consumables where required, and repeated the operating checks. The inspection reading returned toward the expected range.",2025-09-10T14:15:56Z
+NOTE-000009,SORD-004214,TECH-000030,COMPLETION,Final checks completed after work on the drive-end bearing. No immediate recurrence of the bearing condition was observed.,2024-02-14T17:53:53Z
+NOTE-000010,SORD-004232,TECH-000075,INSPECTION,Visual and functional inspection completed. The serviceable assembly showed signs consistent with other; readings were recorded for follow-up.,2023-12-14T02:12:59Z

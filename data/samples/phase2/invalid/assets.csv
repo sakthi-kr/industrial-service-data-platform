@@ -1,0 +1,2 @@
+asset_id,site_id,asset_name,asset_type,manufacturer,model,serial_number,installation_date,criticality,asset_status,created_at,updated_at
+,SITE-000211,Compressor 0001,COMPRESSOR,Apex Dynamics,APE-467,SN-00000001,2009-10-22,LOW,ACTIVE,2022-07-02T14:00:00Z,2025-06-23T18:17:13Z
