@@ -6,13 +6,13 @@ The project uses synthetic data. It is not intended to reproduce a full ERP or C
 
 ## Project status
 
-Phases 0, 1, and 2 are complete. The repository now includes the development setup, documented
-business and data model, deterministic synthetic source datasets, schema and relationship checks,
-controlled invalid examples, tracked samples, and reproducibility manifests.
+The repository currently includes the development setup, documented business and data model,
+deterministic synthetic source datasets, schema and relationship checks, controlled invalid
+examples, tracked samples, and reproducibility manifests.
 
-The next phase will create the Snowflake database, schemas, warehouse, roles, and grants. dbt,
-Power BI, and technician-note enrichment will be added after the ingestion and warehouse layers are
-working.
+The next implementation work will add the Snowflake database, schemas, warehouse, roles, and
+grants. dbt, Power BI, and technician-note enrichment will follow after the ingestion and warehouse
+layers are working.
 
 ## Planned data flow
 
@@ -86,19 +86,6 @@ are kept in `data/samples/phase2/`.
 The generator uses a fixed seed and reporting timestamp. Repeated runs with the same configuration
 produce the same file content and SHA-256 hashes.
 
-## Project phases
-
-0. Repository and development environment
-1. Business scenario and data model
-2. Synthetic industrial datasets
-3. Snowflake infrastructure
-4. Python ingestion pipeline
-5. dbt transformations and data quality
-6. Analytics metrics and SQL validation
-7. Power BI dashboard
-8. Technician-note enrichment
-9. Operations, reliability, security, and CI
-10. Final documentation and GitHub release
 
 ## Data and credentials
 
