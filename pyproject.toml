@@ -12,7 +12,9 @@ license = { text = "MIT" }
 authors = [
   { name = "Sakthi Ravichandran" }
 ]
-dependencies = []
+dependencies = [
+  "snowflake-connector-python==4.2.0",
+]
 
 [project.optional-dependencies]
 dev = [

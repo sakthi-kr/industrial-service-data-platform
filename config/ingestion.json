@@ -1,0 +1,8 @@
+{
+  "source_directory": "data/generated",
+  "source_schema_path": "config/source_schema.json",
+  "batch_size": 1000,
+  "connection_attempts": 3,
+  "connection_retry_seconds": 2.0,
+  "local_report_directory": "data/generated/ingestion_reports"
+}

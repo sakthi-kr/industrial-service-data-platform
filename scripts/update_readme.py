@@ -8,12 +8,12 @@ README_PATH = Path("README.md")
 
 STATUS = """## Project status
 
-The repository includes a reproducible Python development environment, a documented business and
-data model, deterministic synthetic source datasets, schema and relationship checks, controlled
-invalid examples, and Snowflake infrastructure scripts with a least-privilege access model.
+The repository includes a reproducible Python environment, a documented business and data model,
+deterministic synthetic source datasets, live-verified Snowflake infrastructure, and a Python
+pipeline that validates, audits, and idempotently loads source records into the raw data layer.
 
-The next implementation work will connect the Python ingestion pipeline to the Snowflake raw and
-operations schemas. dbt models, Power BI reporting, and technician-note enrichment will follow.
+The next implementation work will build tested dbt models across the staging, core, and analytics
+layers. Power BI reporting and technician-note enrichment will follow.
 """
 
 SNOWFLAKE = """## Snowflake infrastructure
@@ -22,9 +22,25 @@ The Snowflake setup creates an X-Small warehouse, a monthly resource monitor, fi
 schemas, four functional roles, future grants, and operations tables for ingestion and data-quality
 audit records.
 
-Run the setup from Snowsight in the order documented in `docs/snowflake_setup.md`. Local validation
-checks file structure and expected grants, but the access checklist in
-`docs/snowflake_verification.md` must be completed against a real Snowflake account.
+Setup and access checks are documented in `docs/snowflake_setup.md` and
+`docs/snowflake_verification.md`. The verification record includes the completed live deployment and
+least-privilege access checks.
+"""
+
+INGESTION = """## Python ingestion pipeline
+
+The ingestion command validates all configured CSV files before connecting to Snowflake, separates
+accepted and rejected rows, creates missing raw tables, and loads accepted records in batches. It
+also writes run-level and dataset-level audit records. A deterministic record hash prevents
+duplicate inserts when the same files are loaded again.
+
+    python -m industrial_service_platform prepare-ingestion
+    python -m industrial_service_platform test-snowflake
+    python -m industrial_service_platform create-raw-tables
+    python -m industrial_service_platform ingest
+
+Connection setup, live verification, expected outputs, and common errors are documented in
+`docs/ingestion_setup.md`.
 """
 
 
@@ -39,36 +55,26 @@ def replace_section(text: str, heading: str, replacement: str) -> str:
     return text[:start] + replacement.rstrip() + "\n\n" + text[next_heading + 1 :]
 
 
-def remove_internal_roadmap(text: str) -> str:
-    """Remove the internal numbered roadmap from the public README."""
-    heading = "## Project " + "ph" + "ases"
-    start = text.find(heading)
-    if start == -1:
-        return text
-    next_heading = text.find("\n## ", start + len(heading))
-    if next_heading == -1:
-        return text[:start].rstrip() + "\n"
-    return text[:start].rstrip() + "\n\n" + text[next_heading + 1 :]
+def insert_before(text: str, marker: str, section: str) -> str:
+    """Insert a section before a stable README heading."""
+    if marker not in text:
+        raise RuntimeError(f"README marker was not found: {marker}")
+    return text.replace(marker, section.rstrip() + "\n\n" + marker, 1)
 
 
 def main() -> int:
-    """Update status, paths, and the Snowflake section."""
+    """Update implementation status and public usage sections."""
     text = README_PATH.read_text(encoding="utf-8")
     text = replace_section(text, "## Project status", STATUS)
-    text = remove_internal_roadmap(text)
-    old_sample_path = "data/samples/" + "ph" + "ase2/"
-    text = text.replace(old_sample_path, "data/samples/source_data/")
+    text = replace_section(text, "## Snowflake infrastructure", SNOWFLAKE)
 
-    if "## Snowflake infrastructure" in text:
-        text = replace_section(text, "## Snowflake infrastructure", SNOWFLAKE)
+    if "## Python ingestion pipeline" in text:
+        text = replace_section(text, "## Python ingestion pipeline", INGESTION)
     else:
-        marker = "## Data and credentials"
-        if marker not in text:
-            raise RuntimeError("README data-and-credentials section was not found")
-        text = text.replace(marker, SNOWFLAKE.rstrip() + "\n\n" + marker, 1)
+        text = insert_before(text, "## Data and credentials", INGESTION)
 
     README_PATH.write_text(text, encoding="utf-8")
-    print("README updated with the implemented Snowflake infrastructure.")
+    print("README updated with the Snowflake ingestion pipeline.")
     return 0
 
 

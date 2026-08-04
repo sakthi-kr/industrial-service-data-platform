@@ -6,12 +6,12 @@ The project uses synthetic data. It is not intended to reproduce a full ERP or C
 
 ## Project status
 
-The repository includes a reproducible Python development environment, a documented business and
-data model, deterministic synthetic source datasets, schema and relationship checks, controlled
-invalid examples, and Snowflake infrastructure scripts with a least-privilege access model.
+The repository includes a reproducible Python environment, a documented business and data model,
+deterministic synthetic source datasets, live-verified Snowflake infrastructure, and a Python
+pipeline that validates, audits, and idempotently loads source records into the raw data layer.
 
-The next implementation work will connect the Python ingestion pipeline to the Snowflake raw and
-operations schemas. dbt models, Power BI reporting, and technician-note enrichment will follow.
+The next implementation work will build tested dbt models across the staging, core, and analytics
+layers. Power BI reporting and technician-note enrichment will follow.
 
 ## Planned data flow
 
@@ -92,9 +92,24 @@ The Snowflake setup creates an X-Small warehouse, a monthly resource monitor, fi
 schemas, four functional roles, future grants, and operations tables for ingestion and data-quality
 audit records.
 
-Run the setup from Snowsight in the order documented in `docs/snowflake_setup.md`. Local validation
-checks file structure and expected grants, but the access checklist in
-`docs/snowflake_verification.md` must be completed against a real Snowflake account.
+Setup and access checks are documented in `docs/snowflake_setup.md` and
+`docs/snowflake_verification.md`. The verification record includes the completed live deployment and
+least-privilege access checks.
+
+## Python ingestion pipeline
+
+The ingestion command validates all configured CSV files before connecting to Snowflake, separates
+accepted and rejected rows, creates missing raw tables, and loads accepted records in batches. It
+also writes run-level and dataset-level audit records. A deterministic record hash prevents
+duplicate inserts when the same files are loaded again.
+
+    python -m industrial_service_platform prepare-ingestion
+    python -m industrial_service_platform test-snowflake
+    python -m industrial_service_platform create-raw-tables
+    python -m industrial_service_platform ingest
+
+Connection setup, live verification, expected outputs, and common errors are documented in
+`docs/ingestion_setup.md`.
 
 ## Data and credentials
 
