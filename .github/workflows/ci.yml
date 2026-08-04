@@ -52,3 +52,19 @@ jobs:
 
       - name: Run tests
         run: python -m pytest
+
+      - name: Validate dbt project structure
+        run: python scripts/validate_dbt_project.py
+
+      - name: Parse dbt project
+        env:
+          SNOWFLAKE_ACCOUNT: example-account
+          SNOWFLAKE_USER: example-user
+          SNOWFLAKE_PASSWORD: example-password
+          SNOWFLAKE_AUTHENTICATOR: snowflake
+          SNOWFLAKE_WAREHOUSE: INDUSTRIAL_SERVICE_WH
+          SNOWFLAKE_DATABASE: INDUSTRIAL_SERVICE_DB
+          DBT_SNOWFLAKE_ROLE: ISP_TRANSFORMER
+        run: |
+          cp dbt/profiles.example.yml dbt/profiles.yml
+          python scripts/run_dbt.py parse --no-partial-parse

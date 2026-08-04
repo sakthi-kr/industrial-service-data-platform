@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: stg_erp_customers
+    description: Latest valid customer record with normalised text and UTC timestamps.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 150
+    columns:
+      - name: customer_id
+        description: Typed source field customer_id.
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_name
+        description: Typed source field customer_name.
+        data_tests:
+          - not_null
+      - name: industry
+        description: Typed source field industry.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["ENERGY", "CHEMICALS", "MANUFACTURING", "MINING", "UTILITIES"]
+      - name: customer_region
+        description: Typed source field customer_region.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["NORTH", "SOUTH", "EAST", "WEST", "CENTRAL"]
+      - name: customer_status
+        description: Typed source field customer_status.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["ACTIVE", "INACTIVE"]
+      - name: created_at
+        description: Typed source field created_at.
+        data_tests:
+          - not_null
+      - name: updated_at
+        description: Typed source field updated_at.
+        data_tests:
+          - not_null

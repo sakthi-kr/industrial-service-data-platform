@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: stg_erp_sites
+    description: Latest valid customer-site record with typed location fields.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 250
+    columns:
+      - name: site_id
+        description: Typed source field site_id.
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: Typed source field customer_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp_customers')
+                field: customer_id
+      - name: site_name
+        description: Typed source field site_name.
+        data_tests:
+          - not_null
+      - name: country_code
+        description: Typed source field country_code.
+        data_tests:
+          - not_null
+      - name: region
+        description: Typed source field region.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["NORTH", "SOUTH", "EAST", "WEST", "CENTRAL"]
+      - name: timezone
+        description: Typed source field timezone.
+        data_tests:
+          - not_null
+      - name: site_status
+        description: Typed source field site_status.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["ACTIVE", "INACTIVE"]
+      - name: created_at
+        description: Typed source field created_at.
+        data_tests:
+          - not_null
+      - name: updated_at
+        description: Typed source field updated_at.
+        data_tests:
+          - not_null

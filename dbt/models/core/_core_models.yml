@@ -1,0 +1,143 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: Current customer attributes used by service reporting.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 150
+    columns:
+      - name: customer_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique
+  - name: dim_site
+    description: Customer-site attributes and their customer relationship.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 250
+    columns:
+      - name: site_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique
+  - name: dim_asset
+    description: Asset history dimension produced from the dbt snapshot.
+    columns:
+      - name: asset_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique
+  - name: dim_service_contract
+    description: Service-contract coverage and SLA terms by customer site.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 500
+    columns:
+      - name: contract_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique
+  - name: dim_technician
+    description: Current technician attributes used for field-service analysis.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 100
+    columns:
+      - name: technician_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique
+  - name: dim_part
+    description: Spare-part attributes, lead times, and reference costs.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 300
+    columns:
+      - name: part_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique
+  - name: fact_service_case
+    description: One integrated row per customer service case.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 8000
+    columns:
+      - name: service_case_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique
+  - name: fact_service_order
+    description: One integrated row per field-service order.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 6000
+    columns:
+      - name: service_order_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique
+  - name: fact_service_order_part
+    description: One row per part line requested for a service order.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 12000
+    columns:
+      - name: service_order_part_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique
+  - name: fact_service_cost
+    description: One row per service cost transaction.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 16863
+    columns:
+      - name: service_cost_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique
+  - name: fact_equipment_alert
+    description: One row per equipment-monitoring alert.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 20000
+    columns:
+      - name: equipment_alert_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique
+  - name: fact_technician_note
+    description: One row per original technician note.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 5000
+    columns:
+      - name: technician_note_key
+        description: Warehouse surrogate key.
+        data_tests:
+          - not_null
+          - unique

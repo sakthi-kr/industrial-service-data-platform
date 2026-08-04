@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: stg_erp_service_orders
+    description: Latest valid service order with typed work and downtime timestamps.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 6000
+    columns:
+      - name: service_order_id
+        description: Typed source field service_order_id.
+        data_tests:
+          - not_null
+          - unique
+      - name: case_id
+        description: Typed source field case_id.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_crm_customer_cases')
+                field: case_id
+      - name: asset_id
+        description: Typed source field asset_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp_assets')
+                field: asset_id
+      - name: lead_technician_id
+        description: Typed source field lead_technician_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp_technicians')
+                field: technician_id
+      - name: order_type
+        description: Typed source field order_type.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["INSPECTION", "CORRECTIVE_REPAIR", "PREVENTIVE_MAINTENANCE", "EMERGENCY_REPAIR"]
+      - name: order_status
+        description: Typed source field order_status.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["PLANNED", "DISPATCHED", "IN_PROGRESS", "COMPLETED", "CANCELLED"]
+      - name: created_at
+        description: Typed source field created_at.
+        data_tests:
+          - not_null
+      - name: scheduled_start_at
+        description: Typed source field scheduled_start_at.
+        data_tests:
+          - not_null
+      - name: actual_start_at
+        description: Typed source field actual_start_at.
+      - name: completed_at
+        description: Typed source field completed_at.
+      - name: downtime_start_at
+        description: Typed source field downtime_start_at.
+      - name: downtime_end_at
+        description: Typed source field downtime_end_at.
+      - name: resolution_code
+        description: Typed source field resolution_code.
+      - name: created_by_source
+        description: Typed source field created_by_source.
+        data_tests:
+          - not_null

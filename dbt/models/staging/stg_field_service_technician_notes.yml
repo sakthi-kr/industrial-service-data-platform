@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: stg_field_service_technician_notes
+    description: Deduplicated original technician notes with typed creation time.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 5000
+    columns:
+      - name: note_id
+        description: Typed source field note_id.
+        data_tests:
+          - not_null
+          - unique
+      - name: service_order_id
+        description: Typed source field service_order_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp_service_orders')
+                field: service_order_id
+      - name: technician_id
+        description: Typed source field technician_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp_technicians')
+                field: technician_id
+      - name: note_type
+        description: Typed source field note_type.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["INSPECTION", "DIAGNOSIS", "REPAIR", "COMPLETION"]
+      - name: note_text
+        description: Typed source field note_text.
+        data_tests:
+          - not_null
+      - name: created_at
+        description: Typed source field created_at.
+        data_tests:
+          - not_null

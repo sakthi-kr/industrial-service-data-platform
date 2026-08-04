@@ -1,0 +1,35 @@
+with source_rows as (
+  select * from {{ source('raw', 'erp_assets') }}
+),
+
+ranked as (
+  select
+    source_rows.*,
+    row_number() over (
+      partition by asset_id
+      order by try_to_timestamp_tz(updated_at) desc nulls last, _ingested_at desc, _source_row_number desc
+    ) as source_rank
+  from source_rows
+)
+
+select
+  nullif(trim(asset_id), '') as asset_id,
+  nullif(trim(site_id), '') as site_id,
+  nullif(trim(asset_name), '') as asset_name,
+  upper(nullif(trim(asset_type), '')) as asset_type,
+  nullif(trim(manufacturer), '') as manufacturer,
+  nullif(trim(model), '') as model,
+  nullif(trim(serial_number), '') as serial_number,
+  try_to_date(installation_date) as installation_date,
+  upper(nullif(trim(criticality), '')) as criticality,
+  upper(nullif(trim(asset_status), '')) as asset_status,
+  try_to_timestamp_tz(created_at) as created_at,
+  try_to_timestamp_tz(updated_at) as updated_at,
+  _load_batch_id,
+  _source_system,
+  _source_file_name,
+  try_to_number(_source_row_number) as _source_row_number,
+  _ingested_at,
+  _record_hash
+from ranked
+where source_rank = 1

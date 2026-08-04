@@ -1,0 +1,113 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw records loaded by the validated Python ingestion pipeline.
+    database: "{{ env_var('SNOWFLAKE_DATABASE', 'INDUSTRIAL_SERVICE_DB') }}"
+    schema: RAW
+    loader: python_ingestion_pipeline
+    tables:
+      - name: erp_customers
+        identifier: ERP_CUSTOMERS
+        description: Customer master records exported from the ERP-style source.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: erp_sites
+        identifier: ERP_SITES
+        description: Customer locations at which industrial assets are installed.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: erp_assets
+        identifier: ERP_ASSETS
+        description: Current equipment master records used by field service.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: crm_service_contracts
+        identifier: CRM_SERVICE_CONTRACTS
+        description: Service coverage and SLA terms exported from the CRM-style source.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: crm_customer_cases
+        identifier: CRM_CUSTOMER_CASES
+        description: Customer-reported issues and service requests.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: crm_case_status_history
+        identifier: CRM_CASE_STATUS_HISTORY
+        description: Timestamped lifecycle changes for customer cases.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: erp_technicians
+        identifier: ERP_TECHNICIANS
+        description: Field technician master records and service specialisations.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: erp_service_orders
+        identifier: ERP_SERVICE_ORDERS
+        description: Planned and completed field-service work orders.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: erp_parts
+        identifier: ERP_PARTS
+        description: Spare-part master records, lead times, and standard costs.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: erp_service_order_parts
+        identifier: ERP_SERVICE_ORDER_PARTS
+        description: Parts requested or consumed for individual service orders.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: erp_service_costs
+        identifier: ERP_SERVICE_COSTS
+        description: Labour, travel, part, and external-service cost transactions.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: monitoring_equipment_alerts
+        identifier: MONITORING_EQUIPMENT_ALERTS
+        description: Condition and operational alerts raised for industrial assets.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null
+      - name: field_service_technician_notes
+        identifier: FIELD_SERVICE_TECHNICIAN_NOTES
+        description: Original inspection, diagnosis, repair, and completion notes.
+        columns:
+          - name: _RECORD_HASH
+            description: Deterministic hash assigned by the ingestion pipeline.
+            data_tests:
+              - not_null

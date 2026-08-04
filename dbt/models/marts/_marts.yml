@@ -1,0 +1,41 @@
+
+version: 2
+
+models:
+  - name: mart_service_operations
+    description: Monthly service operations metrics by region, priority, and fault category.
+    columns:
+      - name: reporting_month
+        description: Month in which the case was created.
+        data_tests: [not_null]
+      - name: case_count
+        description: Number of cases in the reporting group.
+        data_tests: [not_null]
+
+  - name: mart_asset_reliability
+    description: Asset-level service, alert, downtime, and cost summary.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 1000
+    columns:
+      - name: asset_key
+        description: Asset warehouse key.
+        data_tests: [not_null, unique]
+      - name: asset_id
+        description: Source asset identifier.
+        data_tests: [not_null, unique]
+
+  - name: mart_customer_performance
+    description: Customer-level asset, case, SLA, downtime, and cost summary.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 150
+    columns:
+      - name: customer_key
+        description: Customer warehouse key.
+        data_tests: [not_null, unique]
+      - name: customer_id
+        description: Source customer identifier.
+        data_tests: [not_null, unique]

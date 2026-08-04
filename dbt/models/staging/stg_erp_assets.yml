@@ -1,0 +1,72 @@
+version: 2
+
+models:
+  - name: stg_erp_assets
+    description: Latest valid equipment record with typed installation and status fields.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 1000
+    columns:
+      - name: asset_id
+        description: Typed source field asset_id.
+        data_tests:
+          - not_null
+          - unique
+      - name: site_id
+        description: Typed source field site_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp_sites')
+                field: site_id
+      - name: asset_name
+        description: Typed source field asset_name.
+        data_tests:
+          - not_null
+      - name: asset_type
+        description: Typed source field asset_type.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["GAS_TURBINE", "STEAM_TURBINE", "COMPRESSOR", "INDUSTRIAL_PUMP"]
+      - name: manufacturer
+        description: Typed source field manufacturer.
+        data_tests:
+          - not_null
+      - name: model
+        description: Typed source field model.
+        data_tests:
+          - not_null
+      - name: serial_number
+        description: Typed source field serial_number.
+        data_tests:
+          - not_null
+      - name: installation_date
+        description: Typed source field installation_date.
+        data_tests:
+          - not_null
+      - name: criticality
+        description: Typed source field criticality.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+      - name: asset_status
+        description: Typed source field asset_status.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["ACTIVE", "OUT_OF_SERVICE", "RETIRED"]
+      - name: created_at
+        description: Typed source field created_at.
+        data_tests:
+          - not_null
+      - name: updated_at
+        description: Typed source field updated_at.
+        data_tests:
+          - not_null

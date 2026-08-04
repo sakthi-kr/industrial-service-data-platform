@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: stg_monitoring_equipment_alerts
+    description: Deduplicated asset alerts with typed measurements and timestamps.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 20000
+    columns:
+      - name: alert_id
+        description: Typed source field alert_id.
+        data_tests:
+          - not_null
+          - unique
+      - name: asset_id
+        description: Typed source field asset_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp_assets')
+                field: asset_id
+      - name: related_case_id
+        description: Typed source field related_case_id.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_crm_customer_cases')
+                field: case_id
+      - name: alert_type
+        description: Typed source field alert_type.
+        data_tests:
+          - not_null
+      - name: severity
+        description: Typed source field severity.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["INFO", "WARNING", "CRITICAL"]
+      - name: alert_status
+        description: Typed source field alert_status.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["OPEN", "ACKNOWLEDGED", "CLEARED"]
+      - name: raised_at
+        description: Typed source field raised_at.
+        data_tests:
+          - not_null
+      - name: acknowledged_at
+        description: Typed source field acknowledged_at.
+      - name: cleared_at
+        description: Typed source field cleared_at.
+      - name: measured_value
+        description: Typed source field measured_value.
+        data_tests:
+          - not_null
+      - name: threshold_value
+        description: Typed source field threshold_value.
+        data_tests:
+          - not_null
+      - name: measurement_unit
+        description: Typed source field measurement_unit.
+        data_tests:
+          - not_null

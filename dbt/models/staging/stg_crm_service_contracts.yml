@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: stg_crm_service_contracts
+    description: Latest valid service contract with typed SLA and coverage dates.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 500
+    columns:
+      - name: contract_id
+        description: Typed source field contract_id.
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: Typed source field customer_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp_customers')
+                field: customer_id
+      - name: site_id
+        description: Typed source field site_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp_sites')
+                field: site_id
+      - name: contract_type
+        description: Typed source field contract_type.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["BASIC", "STANDARD", "PREMIUM"]
+      - name: start_date
+        description: Typed source field start_date.
+        data_tests:
+          - not_null
+      - name: end_date
+        description: Typed source field end_date.
+        data_tests:
+          - not_null
+      - name: response_sla_hours
+        description: Typed source field response_sla_hours.
+        data_tests:
+          - not_null
+      - name: resolution_sla_hours
+        description: Typed source field resolution_sla_hours.
+        data_tests:
+          - not_null
+      - name: contract_status
+        description: Typed source field contract_status.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["DRAFT", "ACTIVE", "EXPIRED", "CANCELLED"]
+      - name: created_at
+        description: Typed source field created_at.
+        data_tests:
+          - not_null
+      - name: updated_at
+        description: Typed source field updated_at.
+        data_tests:
+          - not_null

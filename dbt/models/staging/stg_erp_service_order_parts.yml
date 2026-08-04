@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: stg_erp_service_order_parts
+    description: Deduplicated service-order part lines with typed quantities and dates.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 12000
+    columns:
+      - name: service_order_id
+        description: Typed source field service_order_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp_service_orders')
+                field: service_order_id
+      - name: part_id
+        description: Typed source field part_id.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_erp_parts')
+                field: part_id
+      - name: line_number
+        description: Typed source field line_number.
+        data_tests:
+          - not_null
+      - name: quantity
+        description: Typed source field quantity.
+        data_tests:
+          - not_null
+      - name: requested_at
+        description: Typed source field requested_at.
+        data_tests:
+          - not_null
+      - name: required_at
+        description: Typed source field required_at.
+        data_tests:
+          - not_null
+      - name: delivered_at
+        description: Typed source field delivered_at.
+      - name: unit_cost_eur
+        description: Typed source field unit_cost_eur.
+        data_tests:
+          - not_null

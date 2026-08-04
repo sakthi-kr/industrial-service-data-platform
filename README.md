@@ -7,11 +7,9 @@ The project uses synthetic data. It is not intended to reproduce a full ERP or C
 ## Project status
 
 The repository includes a reproducible Python environment, a documented business and data model,
-deterministic synthetic source datasets, live-verified Snowflake infrastructure, and a Python
-pipeline that validates, audits, and idempotently loads source records into the raw data layer.
-
-The next implementation work will build tested dbt models across the staging, core, and analytics
-layers. Power BI reporting and technician-note enrichment will follow.
+deterministic synthetic source datasets, live-verified Snowflake infrastructure, a validated
+idempotent ingestion pipeline, and tested dbt models across the staging, core, and analytics layers.
+Power BI reporting and technician-note enrichment are the next implementation areas.
 
 ## Planned data flow
 
@@ -110,6 +108,21 @@ duplicate inserts when the same files are loaded again.
 
 Connection setup, live verification, expected outputs, and common errors are documented in
 `docs/ingestion_setup.md`.
+
+## dbt transformations and data quality
+
+The dbt project converts source-preserving raw tables into typed staging views, reusable dimensions
+and facts, an asset-history snapshot, and three reporting marts. Generic and singular tests check
+keys, relationships, allowed values, expected row counts, timestamps, and financial rules.
+
+    cp dbt/profiles.example.yml dbt/profiles.yml
+    python scripts/run_dbt.py debug
+    python scripts/run_dbt.py parse --no-partial-parse
+    python scripts/run_dbt.py build
+    python scripts/run_dbt.py docs generate
+
+Setup, model design, live verification, and troubleshooting are documented in `docs/dbt_setup.md`,
+`docs/dbt_model_design.md`, and `docs/dbt_verification.md`.
 
 ## Data and credentials
 

@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: stg_erp_technicians
+    description: Latest valid technician record with standardised service attributes.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 100
+    columns:
+      - name: technician_id
+        description: Typed source field technician_id.
+        data_tests:
+          - not_null
+          - unique
+      - name: technician_name
+        description: Typed source field technician_name.
+        data_tests:
+          - not_null
+      - name: home_region
+        description: Typed source field home_region.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["NORTH", "SOUTH", "EAST", "WEST", "CENTRAL"]
+      - name: specialisation
+        description: Typed source field specialisation.
+        data_tests:
+          - not_null
+      - name: skill_level
+        description: Typed source field skill_level.
+        data_tests:
+          - not_null
+      - name: technician_status
+        description: Typed source field technician_status.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["ACTIVE", "INACTIVE"]
+      - name: created_at
+        description: Typed source field created_at.
+        data_tests:
+          - not_null
+      - name: updated_at
+        description: Typed source field updated_at.
+        data_tests:
+          - not_null
