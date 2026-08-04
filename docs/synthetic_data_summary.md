@@ -1,6 +1,6 @@
-# Phase 2 summary
+# Synthetic data summary
 
-Phase 2 adds deterministic source data for the industrial service scenario.
+This workflow adds deterministic source data for the industrial service scenario.
 The full files remain local, while small samples and validation metadata are tracked.
 
 ## Generated data
@@ -35,7 +35,7 @@ The full files remain local, while small samples and validation metadata are tra
 The configuration uses a fixed seed and reporting timestamp. The generator writes
 SHA-256 manifests, and the automated tests compare two independent runs byte for byte.
 
-## Phase gate
+## Completion criteria
 
-Phase 2 is complete when generation succeeds, validation reports zero issues,
-all automated tests pass, and the tracked samples match the configured schema.
+The synthetic-data checks pass when generation succeeds and validation reports zero issues.
+All automated tests must pass, and the tracked samples must match the configured schema.

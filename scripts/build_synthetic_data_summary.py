@@ -1,4 +1,4 @@
-"""Build the Phase 2 completion summary from generated metadata."""
+"""Build the synthetic-data summary from generated metadata."""
 
 from __future__ import annotations
 
@@ -6,9 +6,9 @@ import json
 from pathlib import Path
 from typing import Any
 
-SUMMARY_PATH = Path("data/samples/phase2/generation_summary.json")
-VALIDATION_PATH = Path("data/samples/phase2/validation_report.json")
-OUTPUT_PATH = Path("docs/phase_2_summary.md")
+SUMMARY_PATH = Path("data/samples/source_data/generation_summary.json")
+VALIDATION_PATH = Path("data/samples/source_data/validation_report.json")
+OUTPUT_PATH = Path("docs/synthetic_data_summary.md")
 
 
 def main() -> int:
@@ -16,16 +16,16 @@ def main() -> int:
     validation = _load_json(VALIDATION_PATH)
 
     if not validation.get("is_valid"):
-        raise RuntimeError("Phase 2 validation report is not valid")
+        raise RuntimeError("Synthetic-data validation report is not valid")
 
     row_counts = summary["row_counts"]
     quality = summary["quality_signals"]
     total_rows = sum(int(value) for value in row_counts.values())
 
     lines = [
-        "# Phase 2 summary",
+        "# Synthetic data summary",
         "",
-        "Phase 2 adds deterministic source data for the industrial service scenario.",
+        "This workflow adds deterministic source data for the industrial service scenario.",
         "The full files remain local, while small samples and validation metadata are tracked.",
         "",
         "## Generated data",
@@ -69,15 +69,21 @@ def main() -> int:
             "SHA-256 manifests, and the automated tests compare two independent "
             "runs byte for byte.",
             "",
-            "## Phase gate",
+            "## Completion criteria",
             "",
-            "Phase 2 is complete when generation succeeds, validation reports zero issues,",
-            "all automated tests pass, and the tracked samples match the configured schema.",
+            (
+                "The synthetic-data checks pass when generation succeeds and "
+                "validation reports zero issues."
+            ),
+            (
+                "All automated tests must pass, and the tracked samples must "
+                "match the configured schema."
+            ),
         ]
     )
 
     OUTPUT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"Phase 2 summary written to {OUTPUT_PATH}")
+    print(f"Synthetic data summary written to {OUTPUT_PATH}")
     return 0
 
 

@@ -1,7 +1,7 @@
 # Source data dictionary
 
 This dictionary is generated from `config/source_schema.json`.
-The JSON catalogue is the machine-readable source of truth for Phase 2.
+The JSON catalogue is the machine-readable source of truth for synthetic data generation.
 
 ## Type conventions
 

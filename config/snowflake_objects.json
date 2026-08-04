@@ -1,0 +1,37 @@
+{
+  "database": "INDUSTRIAL_SERVICE_DB",
+  "warehouse": {
+    "name": "INDUSTRIAL_SERVICE_WH",
+    "size": "XSMALL",
+    "auto_suspend_seconds": 60,
+    "auto_resume": true,
+    "initially_suspended": true
+  },
+  "resource_monitor": {
+    "name": "INDUSTRIAL_SERVICE_MONITOR",
+    "credit_quota": 5,
+    "frequency": "MONTHLY",
+    "notify_percent": 75,
+    "suspend_percent": 90,
+    "suspend_immediate_percent": 100
+  },
+  "schemas": [
+    "RAW",
+    "STAGING",
+    "CORE",
+    "ANALYTICS",
+    "OPERATIONS"
+  ],
+  "roles": {
+    "admin": "ISP_ADMIN",
+    "loader": "ISP_LOADER",
+    "transformer": "ISP_TRANSFORMER",
+    "analyst": "ISP_ANALYST"
+  },
+  "operations_tables": [
+    "PIPELINE_RUNS",
+    "INGESTION_RESULTS",
+    "REJECTED_RECORDS",
+    "DATA_QUALITY_RESULTS"
+  ]
+}

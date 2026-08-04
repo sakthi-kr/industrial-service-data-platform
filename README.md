@@ -6,13 +6,12 @@ The project uses synthetic data. It is not intended to reproduce a full ERP or C
 
 ## Project status
 
-The repository currently includes the development setup, documented business and data model,
-deterministic synthetic source datasets, schema and relationship checks, controlled invalid
-examples, tracked samples, and reproducibility manifests.
+The repository includes a reproducible Python development environment, a documented business and
+data model, deterministic synthetic source datasets, schema and relationship checks, controlled
+invalid examples, and Snowflake infrastructure scripts with a least-privilege access model.
 
-The next implementation work will add the Snowflake database, schemas, warehouse, roles, and
-grants. dbt, Power BI, and technician-note enrichment will follow after the ingestion and warehouse
-layers are working.
+The next implementation work will connect the Python ingestion pipeline to the Snowflake raw and
+operations schemas. dbt models, Power BI reporting, and technician-note enrichment will follow.
 
 ## Planned data flow
 
@@ -78,7 +77,7 @@ Run all configured pre-commit checks with:
 
 The default configuration generates the full ERP-, CRM-, monitoring-, and field-service-style
 source files locally. Generated files are excluded from Git; small samples and validation metadata
-are kept in `data/samples/phase2/`.
+are kept in `data/samples/source_data/`.
 
     python -m industrial_service_platform generate-data
     python -m industrial_service_platform validate-data
@@ -86,6 +85,16 @@ are kept in `data/samples/phase2/`.
 The generator uses a fixed seed and reporting timestamp. Repeated runs with the same configuration
 produce the same file content and SHA-256 hashes.
 
+
+## Snowflake infrastructure
+
+The Snowflake setup creates an X-Small warehouse, a monthly resource monitor, five managed-access
+schemas, four functional roles, future grants, and operations tables for ingestion and data-quality
+audit records.
+
+Run the setup from Snowsight in the order documented in `docs/snowflake_setup.md`. Local validation
+checks file structure and expected grants, but the access checklist in
+`docs/snowflake_verification.md` must be completed against a real Snowflake account.
 
 ## Data and credentials
 

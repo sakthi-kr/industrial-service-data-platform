@@ -1,6 +1,6 @@
-# Phase 1 review
+# Data model review
 
-Phase 1 fixes the business meaning of the project before data generation.
+The data model fixes the business meaning of the project before source generation.
 The following artefacts now define the scope:
 
 - `docs/business_context.md` — users, decisions, assumptions, and limits;
@@ -21,5 +21,5 @@ The following artefacts now define the scope:
 - The asset dimension is marked for historical tracking.
 - Deliberate simplifications and out-of-scope areas are documented.
 
-Phase 2 can now generate data against a fixed contract instead of
+The source generator can now work against a fixed contract instead of
 inventing fields while the generator is being written.

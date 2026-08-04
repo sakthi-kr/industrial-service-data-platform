@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "config" / "source_schema.json"
 DICTIONARY_PATH = ROOT / "docs" / "data_dictionary.md"
 ERD_PATH = ROOT / "docs" / "entity_relationship_diagram.md"
-SUMMARY_PATH = ROOT / "docs" / "phase_1_summary.md"
+SUMMARY_PATH = ROOT / "docs" / "data_model_summary.md"
 
 CASE_STATUSES = [
     "OPEN",
@@ -1173,7 +1173,7 @@ def write_data_dictionary() -> None:
         "# Source data dictionary",
         "",
         "This dictionary is generated from `config/source_schema.json`.",
-        "The JSON catalogue is the machine-readable source of truth for Phase 2.",
+        "The JSON catalogue is the machine-readable source of truth for synthetic data generation.",
         "",
         "## Type conventions",
         "",
@@ -1286,9 +1286,9 @@ def write_erd() -> None:
 
 def write_phase_summary() -> None:
     lines = [
-        "# Phase 1 review",
+        "# Data model review",
         "",
-        "Phase 1 fixes the business meaning of the project before data generation.",
+        "The data model fixes the business meaning of the project before source generation.",
         "The following artefacts now define the scope:",
         "",
         "- `docs/business_context.md` — users, decisions, assumptions, and limits;",
@@ -1309,7 +1309,7 @@ def write_phase_summary() -> None:
         "- The asset dimension is marked for historical tracking.",
         "- Deliberate simplifications and out-of-scope areas are documented.",
         "",
-        "Phase 2 can now generate data against a fixed contract instead of",
+        "The source generator can now work against a fixed contract instead of",
         "inventing fields while the generator is being written.",
     ]
     SUMMARY_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -1323,7 +1323,7 @@ def main() -> None:
     write_phase_summary()
 
     print(
-        "Phase 1 catalogue generated: "
+        "Source catalogue generated: "
         f"{len(DATASETS)} datasets, "
         f"{sum(len(item['fields']) for item in DATASETS.values())} fields, "
         f"{len(RELATIONSHIPS)} relationships"

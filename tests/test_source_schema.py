@@ -70,7 +70,7 @@ def test_generated_phase_one_documents_exist() -> None:
     expected_documents = [
         ROOT / "docs" / "data_dictionary.md",
         ROOT / "docs" / "entity_relationship_diagram.md",
-        ROOT / "docs" / "phase_1_summary.md",
+        ROOT / "docs" / "data_model_summary.md",
     ]
 
     for path in expected_documents:

@@ -1,4 +1,4 @@
-"""Generate the Phase 2 synthetic source datasets."""
+"""Generate the synthetic source datasets."""
 
 import sys
 

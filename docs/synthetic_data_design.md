@@ -25,7 +25,7 @@ The main controls are:
 - the number of sample rows retained for each dataset.
 
 The full files are written to `data/generated/`, which is excluded from Git. Small examples are
-written to `data/samples/phase2/` so that the source shapes can be inspected directly on GitHub.
+written to `data/samples/source_data/` so that the source shapes can be inspected directly on GitHub.
 
 ## Dataset scale
 

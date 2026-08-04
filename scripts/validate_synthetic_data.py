@@ -1,4 +1,4 @@
-"""Validate the Phase 2 synthetic source datasets."""
+"""Validate the synthetic source datasets."""
 
 import sys
 
