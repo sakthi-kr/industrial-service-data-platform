@@ -1,4 +1,3 @@
-
 version: 2
 
 models:
@@ -39,3 +38,26 @@ models:
       - name: customer_id
         description: Source customer identifier.
         data_tests: [not_null, unique]
+
+  - name: mart_kpi_summary
+    description: Single-row KPI summary reconciled against independent Python calculations.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 1
+    columns:
+      - name: reporting_as_of
+        description: Fixed UTC timestamp used for open-record and follow-up-window calculations.
+        data_tests: [not_null, unique]
+      - name: open_case_count
+        description: Cases unresolved at the reporting timestamp.
+        data_tests: [not_null]
+      - name: critical_open_case_count
+        description: Open cases with critical priority.
+        data_tests: [not_null]
+      - name: total_downtime_hours
+        description: Non-overlapping equipment downtime across assets.
+        data_tests: [not_null]
+      - name: total_service_cost_eur
+        description: Sum of valid service cost records in EUR.
+        data_tests: [not_null]

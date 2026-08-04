@@ -5,11 +5,11 @@ This project models day-to-day service operations for industrial equipment. It b
 The project uses synthetic data. It is not intended to reproduce a full ERP or CRM system. The aim is to build a complete and testable workflow from source data to an analytics layer, with enough operational detail to make the results useful rather than purely illustrative.
 
 ## Project status
-
 The repository includes a reproducible Python environment, a documented business and data model,
 deterministic synthetic source datasets, live-verified Snowflake infrastructure, a validated
-idempotent ingestion pipeline, and tested dbt models across the staging, core, and analytics layers.
-Power BI reporting and technician-note enrichment are the next implementation areas.
+idempotent ingestion pipeline, tested dbt models, and independent reconciliation of twelve service
+and reliability KPIs. Power BI reporting and technician-note enrichment are the next implementation
+areas.
 
 ## Planned data flow
 
@@ -110,19 +110,28 @@ Connection setup, live verification, expected outputs, and common errors are doc
 `docs/ingestion_setup.md`.
 
 ## dbt transformations and data quality
-
 The dbt project converts source-preserving raw tables into typed staging views, reusable dimensions
-and facts, an asset-history snapshot, and three reporting marts. Generic and singular tests check
-keys, relationships, allowed values, expected row counts, timestamps, and financial rules.
+and facts, an asset-history snapshot, and reporting marts. Generic and singular tests check keys,
+relationships, allowed values, expected row counts, timestamps, financial rules, and KPI bounds.
 
     cp dbt/profiles.example.yml dbt/profiles.yml
     python scripts/run_dbt.py debug
     python scripts/run_dbt.py parse --no-partial-parse
     python scripts/run_dbt.py build
     python scripts/run_dbt.py docs generate
-
 Setup, model design, live verification, and troubleshooting are documented in `docs/dbt_setup.md`,
 `docs/dbt_model_design.md`, and `docs/dbt_verification.md`.
+
+## Analytics metric reconciliation
+Twelve warehouse KPIs are compared with an independent Python implementation that reads the
+generated source files. Counts must match exactly, while rates, durations, and cost use explicit
+metric-specific tolerances.
+
+    python -m industrial_service_platform generate-data
+    python scripts/run_dbt.py build --fail-fast
+    python scripts/reconcile_analytics.py
+Definitions, tolerances, verification steps, and mismatch diagnosis are documented in
+`docs/analytics_reconciliation.md` and `docs/analytics_verification.md`.
 
 ## Data and credentials
 

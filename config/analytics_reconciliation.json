@@ -1,0 +1,21 @@
+{
+  "source_directory": "data/generated",
+  "reporting_as_of": "2026-08-04T12:00:00Z",
+  "warehouse_relation": "INDUSTRIAL_SERVICE_DB.ANALYTICS.MART_KPI_SUMMARY",
+  "snowflake_role": "ISP_ANALYST",
+  "output_path": "data/generated/analytics_reconciliation.json",
+  "tolerances": {
+    "open_case_count": 0.0,
+    "critical_open_case_count": 0.0,
+    "response_sla_compliance_rate": 0.000001,
+    "resolution_sla_compliance_rate": 0.000001,
+    "mean_resolution_hours": 0.000278,
+    "median_resolution_hours": 0.000278,
+    "first_time_fix_rate": 0.000001,
+    "repeat_failure_rate": 0.000001,
+    "total_downtime_hours": 0.000278,
+    "average_part_delivery_delay_hours": 0.000278,
+    "total_service_cost_eur": 0.01,
+    "alert_to_case_conversion_rate": 0.000001
+  }
+}
