@@ -1,4 +1,4 @@
-"""Complete the final release-readiness verification record."""
+"""Complete the final version-verification record."""
 
 from __future__ import annotations
 
@@ -13,25 +13,28 @@ EXPECTED_CHECKS = 13
 
 
 def complete_verification(path: Path = CHECKLIST_PATH) -> None:
+    """Mark a fully pending checklist as complete without accepting partial state."""
     text = path.read_text(encoding="utf-8")
     unchecked = text.count("- [ ]")
     checked = text.count("- [x]")
 
     if checked == EXPECTED_CHECKS and unchecked == 0:
         return
+
     if unchecked != EXPECTED_CHECKS or checked != 0:
         raise RuntimeError(
-            "Expected either a fully pending or fully complete readiness checklist: "
+            "Expected either a fully pending or fully complete version checklist: "
             f"checked={checked}, unchecked={unchecked}"
         )
 
     updated = text.replace("- [ ]", "- [x]")
     updated = updated.replace(
-        "## Readiness result\n\nPending.",
+        "## Verification result\n\nPending.",
         (
-            "## Readiness result\n\n"
-            "The repository and external assets are ready for the `v1.0.0` "
-            "release commit, tag and GitHub release."
+            "## Verification result\n\n"
+            "The repository is complete and the annotated tag `v1.0.0` identifies "
+            "the first audited portfolio version. No GitHub Release is published; "
+            "the editable Power BI `.pbix` file remains local."
         ),
         1,
     )
@@ -39,6 +42,7 @@ def complete_verification(path: Path = CHECKLIST_PATH) -> None:
 
 
 def write_summary() -> None:
+    """Write a small, sanitized summary of the tagged version."""
     config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
     summary = {
         "version": config["version"],
@@ -49,7 +53,7 @@ def write_summary() -> None:
         "reconciled_kpis": 12,
         "enriched_notes": 5000,
         "power_bi_pages": 2,
-        "release_status": "READY",
+        "release_status": "TAGGED",
     }
     SUMMARY_PATH.parent.mkdir(parents=True, exist_ok=True)
     SUMMARY_PATH.write_text(
@@ -64,7 +68,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--confirm-release-ready",
         action="store_true",
-        help="Confirm that the repository and external release assets are ready.",
+        help="Confirm that the repository is ready for its audited version tag.",
     )
     return parser.parse_args()
 
@@ -72,10 +76,10 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     if not args.confirm_release_ready:
-        raise RuntimeError("Use --confirm-release-ready only after all readiness checks pass.")
+        raise RuntimeError("Use --confirm-release-ready only after all version checks pass.")
     complete_verification()
     write_summary()
-    print(f"Release readiness completed with {EXPECTED_CHECKS} checks.")
+    print(f"Version verification completed with {EXPECTED_CHECKS} checks.")
     return 0
 
 

@@ -1,21 +1,21 @@
-# Final release readiness verification
+# Final version verification
 
-Complete each item only after observing the result.
+Each item below was completed after observing the corresponding result.
 
-- [x] The Dependabot dependency update is resolved before release preparation.
+- [x] The Dependabot dependency update was resolved before versioning.
 - [x] `pyproject.toml` and `CITATION.cff` report version `1.0.0`.
-- [x] The README describes completed implementation rather than planned work.
+- [x] The README describes the completed implementation rather than planned work.
 - [x] Dashboard screenshots and the PDF export render correctly.
-- [x] The Power BI `.pbix` working file opens successfully.
+- [x] The local Power BI `.pbix` working file opens successfully.
 - [x] All local tests and repository validators pass.
 - [x] The live Snowflake platform health report passes.
 - [x] The recovery drills pass.
-- [x] Changelog, citation, architecture, reproducibility and release notes are present.
-- [x] No credentials, local profiles, generated full data or private evidence are staged.
-- [x] The external release assets and SHA-256 checksums are created.
-- [x] CI, CodeQL, Dependabot and dependency-review workflows are present.
-- [x] The staged release diff passes whitespace and repository-audit checks.
+- [x] Changelog, citation, architecture, reproducibility and version notes are present.
+- [x] No credentials, local profiles, generated full data or private evidence are tracked.
+- [x] The annotated `v1.0.0` tag points to the audited version commit.
+- [x] CI, CodeQL, Dependabot and dependency-review controls are present.
+- [x] The final staged diff passed whitespace and repository-hygiene checks.
 
-## Readiness result
+## Verification result
 
-The repository and external assets are ready for the `v1.0.0` release commit, tag and GitHub release.
+The repository is complete and the annotated tag `v1.0.0` identifies the first audited portfolio version. No GitHub Release is published; the editable Power BI `.pbix` file remains local.

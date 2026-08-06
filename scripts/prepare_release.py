@@ -1,4 +1,4 @@
-"""Prepare versioned public files for the first complete release."""
+"""Prepare versioned public files for an audited repository tag."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ CITATION_PATH = Path("CITATION.cff")
 
 
 def load_release_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
-    """Load release metadata."""
+    """Load version metadata."""
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -31,7 +31,6 @@ def update_project_version(path: Path, version: str) -> None:
             in_project = True
             updated.append(line)
             continue
-
         if in_project and stripped.startswith("[") and stripped != "[project]":
             in_project = False
 
@@ -53,7 +52,7 @@ def update_project_version(path: Path, version: str) -> None:
 
 
 def validate_citation(path: Path, version: str, release_date: str) -> None:
-    """Confirm the tracked citation metadata matches the release config."""
+    """Confirm the citation metadata matches the version configuration."""
     text = path.read_text(encoding="utf-8")
     required = (
         f"version: {version}",
@@ -73,7 +72,7 @@ def main() -> int:
     update_project_version(PYPROJECT_PATH, version)
     validate_citation(CITATION_PATH, version, release_date)
 
-    print(f"Release metadata prepared: version={version}, date={release_date}")
+    print(f"Version metadata prepared: version={version}, date={release_date}")
     return 0
 
 

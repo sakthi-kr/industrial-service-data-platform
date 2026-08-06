@@ -4,6 +4,14 @@ All notable changes to this project are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses semantic versioning.
 
+## [Unreleased]
+
+### Changed
+
+- clarified that `v1.0.0` is an annotated Git tag and that no GitHub Release is published;
+- aligned README, version notes, security policy and final verification wording;
+- replaced machine-specific asset paths with portable local defaults.
+
 ## [1.0.0] - 2026-08-06
 
 ### Added
@@ -18,7 +26,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Snowflake publication and dbt modelling for 5,000 enrichment records;
 - operational health checks, deterministic recovery drills, rollback verification and runbooks;
 - Python 3.10–3.12 CI, CodeQL, Dependabot and pull-request dependency review;
-- final architecture, reproducibility, portfolio and release documentation.
+- final architecture, reproducibility, portfolio and version documentation.
 
 ### Security
 

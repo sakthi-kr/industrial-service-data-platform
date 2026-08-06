@@ -42,14 +42,21 @@ flowchart TB
     CRM --> GEN
     MON --> GEN
     NOTES --> GEN
+
     GEN --> PREP --> LOAD --> RAW
     LOAD --> OPERATIONS
     RAW --> STAGING --> CORE --> ANALYTICS
-    NOTES --> MODEL --> STAGING
+
+    GEN --> MODEL --> STAGING
+    GEN --> REF
     ANALYTICS --> REF
+
     ANALYTICS --> PBI
     ANALYTICS --> ANALYST
+    STAGING --> DOCS
     CORE --> DOCS
+    ANALYTICS --> DOCS
+
     HEALTH --> OPERATIONS
     HEALTH --> RAW
     HEALTH --> ANALYTICS
@@ -61,7 +68,7 @@ flowchart TB
 |---|---|---|
 | Generated files | Reproducible source exports and deliberate invalid examples | fixed seed, hashes, schema catalogue |
 | `RAW` | Preserve accepted source values and ingestion metadata | record hashes, batch IDs, source row numbers |
-| `STAGING` | Type conversion, cleaning and source deduplication | dbt tests, accepted values, timestamp rules |
+| `STAGING` | Type conversion, cleaning, source deduplication and published enrichment results | dbt tests, accepted values, timestamp rules |
 | `CORE` | Reusable dimensions, facts and asset history | surrogate keys, relationships, snapshots |
 | `ANALYTICS` | KPI-ready marts and enrichment output | metric tests, Python reconciliation, analyst access |
 | `OPERATIONS` | Pipeline history, rejected rows and quality results | health checks, runbooks, recovery drills |

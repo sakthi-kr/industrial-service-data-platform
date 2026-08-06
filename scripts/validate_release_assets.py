@@ -1,4 +1,4 @@
-"""Validate public documentation, release metadata and repository hygiene."""
+"""Validate public documentation, version metadata and repository hygiene."""
 
 from __future__ import annotations
 
@@ -63,7 +63,7 @@ REQUIRED_FILES = (
 
 
 def load_config(path: Path = CONFIG_PATH) -> dict[str, object]:
-    """Load release metadata."""
+    """Load version metadata and optional local asset settings."""
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -91,20 +91,21 @@ def checklist_state(text: str) -> str:
     total = unchecked + checked
 
     if total != EXPECTED_CHECKS:
-        raise RuntimeError(f"Expected {EXPECTED_CHECKS} release checks, found {total}")
+        raise RuntimeError(f"Expected {EXPECTED_CHECKS} version checks, found {total}")
     if unchecked == EXPECTED_CHECKS:
         return "pending"
     if checked == EXPECTED_CHECKS:
         return "complete"
+
     raise RuntimeError(
-        f"Final release checklist is partially completed: checked={checked}, unchecked={unchecked}"
+        f"Final version checklist is partially completed: checked={checked}, unchecked={unchecked}"
     )
 
 
 def check_required_files() -> None:
     missing = [str(path) for path in REQUIRED_FILES if not path.is_file()]
     if missing:
-        raise RuntimeError(f"Missing final release files: {missing}")
+        raise RuntimeError(f"Missing final version files: {missing}")
 
 
 def check_versions(config: dict[str, object]) -> None:
@@ -135,20 +136,53 @@ def check_readme() -> None:
         "service_operations_overview.png",
         "asset_customer_analysis.png",
         "v1.0.0",
+        "No GitHub Release is published",
     )
     missing = [value for value in required if value not in text]
     if missing:
-        raise RuntimeError(f"README is missing release evidence: {missing}")
+        raise RuntimeError(f"README is missing version evidence: {missing}")
 
     forbidden = (
         "## Planned scope",
         "## Planned data flow",
         "The remaining work is",
         "The finished project will include",
+        "distributed with the GitHub release",
     )
     found = [value for value in forbidden if value in text]
     if found:
-        raise RuntimeError(f"README still contains planning language: {found}")
+        raise RuntimeError(f"README contains outdated wording: {found}")
+
+
+def check_publication_consistency(config: dict[str, object]) -> None:
+    """Reject claims that a GitHub Release exists and machine-specific paths."""
+    files = (
+        Path("README.md"),
+        Path("SECURITY.md"),
+        Path("docs/final_verification.md"),
+        Path("docs/release_notes_v1.0.0.md"),
+    )
+    forbidden = (
+        "distributed with the GitHub release",
+        "ready for the `v1.0.0` release commit, tag and GitHub release",
+        "latest published release",
+    )
+
+    failures: list[str] = []
+    for path in files:
+        text = path.read_text(encoding="utf-8")
+        for phrase in forbidden:
+            if phrase in text:
+                failures.append(f"{path}: {phrase}")
+
+    drive_path = re.compile(r"^[A-Za-z]:[/\\]")
+    for key in ("external_asset_directory", "power_bi_source"):
+        value = str(config[key])
+        if drive_path.match(value) or value.startswith(("/", "\\")):
+            failures.append(f"config/release.json: non-portable {key}={value}")
+
+    if failures:
+        raise RuntimeError(f"Version-publication inconsistencies: {failures}")
 
 
 def check_public_planning_labels(files: Iterable[Path]) -> None:
@@ -191,6 +225,7 @@ def check_repository_hygiene(files: list[Path]) -> None:
     secret_failures: list[str] = []
     private_key_marker = "-----BEGIN " + "PRIVATE KEY-----"
     password_prefix = "SNOWFLAKE_" + "PASSWORD="
+
     for path in files:
         if path.suffix.lower() not in TEXT_SUFFIXES or not path.is_file():
             continue
@@ -239,20 +274,21 @@ def check_text_quality(files: Iterable[Path]) -> None:
 
 
 def main() -> int:
-    """Run the final repository audit."""
+    """Run the final repository and version audit."""
     config = load_config()
     check_required_files()
     check_versions(config)
     check_readme()
+    check_publication_consistency(config)
 
     files = tracked_files()
     check_repository_hygiene(files)
     check_public_planning_labels(files)
     check_text_quality(files)
-
     state = checklist_state(CHECKLIST_PATH.read_text(encoding="utf-8"))
+
     print(
-        "Release asset validation passed: "
+        "Repository version validation passed: "
         f"version={config['version']}, tracked_files={len(files)}, state={state}"
     )
     return 0

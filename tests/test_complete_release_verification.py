@@ -11,7 +11,7 @@ def test_complete_verification_marks_all_items(tmp_path: Path) -> None:
     path.write_text(
         "# Verify\n\n"
         + "\n".join(f"- [ ] item {index}" for index in range(13))
-        + "\n\n## Readiness result\n\nPending.\n",
+        + "\n\n## Verification result\n\nPending.\n",
         encoding="utf-8",
     )
 
@@ -19,7 +19,8 @@ def test_complete_verification_marks_all_items(tmp_path: Path) -> None:
     text = path.read_text(encoding="utf-8")
 
     assert text.count("- [x]") == 13
-    assert "ready for the `v1.0.0`" in text
+    assert "annotated tag `v1.0.0`" in text
+    assert "No GitHub Release is published" in text
 
 
 def test_write_summary_creates_sanitized_file(
@@ -38,6 +39,6 @@ def test_write_summary_creates_sanitized_file(
     module.write_summary()
     data = json.loads(summary.read_text(encoding="utf-8"))
 
-    assert data["release_status"] == "READY"
+    assert data["release_status"] == "TAGGED"
     assert data["source_records"] == 107724
     assert "account" not in data

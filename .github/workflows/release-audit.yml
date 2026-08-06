@@ -1,4 +1,4 @@
-name: Release Audit
+name: Version Audit
 
 "on":
   push:
@@ -15,15 +15,14 @@ permissions:
   contents: read
 
 concurrency:
-  group: release-audit-${{ github.workflow }}-${{ github.ref }}
+  group: version-audit-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   audit:
-    name: Validate release assets
+    name: Validate version and repository assets
     runs-on: ubuntu-latest
     timeout-minutes: 20
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -46,5 +45,5 @@ jobs:
       - name: Run tests
         run: python -m pytest
 
-      - name: Validate release assets
+      - name: Validate version and repository assets
         run: python scripts/validate_release_assets.py

@@ -1,4 +1,4 @@
-"""Build external GitHub release assets without committing binary working files."""
+"""Build optional local distribution assets without committing binary files."""
 
 from __future__ import annotations
 
@@ -14,10 +14,12 @@ CONFIG_PATH = Path("config/release.json")
 
 
 def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
+    """Load version and local distribution settings."""
     return json.loads(path.read_text(encoding="utf-8"))
 
 
 def sha256(path: Path) -> str:
+    """Calculate a file SHA-256 checksum."""
     digest = hashlib.sha256()
     with path.open("rb") as handle:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
@@ -26,25 +28,26 @@ def sha256(path: Path) -> str:
 
 
 def require_file(path: Path, minimum_size: int) -> None:
+    """Require a local source file with a plausible minimum size."""
     if not path.is_file():
-        raise RuntimeError(f"Required release source is missing: {path}")
+        raise RuntimeError(f"Required distribution source is missing: {path}")
     size = path.stat().st_size
     if size < minimum_size:
-        raise RuntimeError(f"Release source is unexpectedly small: {path} ({size} bytes)")
+        raise RuntimeError(f"Distribution source is unexpectedly small: {path} ({size} bytes)")
 
 
 def build_assets(pbix_source: Path, output_directory: Path) -> list[Path]:
+    """Create optional local PBIX, PDF, evidence and checksum outputs."""
     config = load_config()
     version = str(config["version"])
     pdf_source = Path(str(config["dashboard_pdf"]))
-
     require_file(pbix_source, 10_000)
     require_file(pdf_source, 1_000)
 
     output_directory.mkdir(parents=True, exist_ok=True)
     pbix_output = output_directory / f"industrial-service-dashboard-v{version}.pbix"
     pdf_output = output_directory / f"industrial-service-dashboard-v{version}.pdf"
-    notes_output = output_directory / "RELEASE_NOTES.md"
+    notes_output = output_directory / "VERSION_NOTES.md"
     evidence_output = output_directory / f"industrial-service-platform-evidence-v{version}.zip"
 
     shutil.copy2(pbix_source, pbix_output)
@@ -84,17 +87,20 @@ def build_assets(pbix_source: Path, output_directory: Path) -> list[Path]:
 
 
 def parse_args() -> argparse.Namespace:
+    """Read optional portable local paths from arguments or configuration."""
     config = load_config()
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--pbix",
         type=Path,
         default=Path(str(config["power_bi_source"])),
+        help="Path to the local Power BI working file.",
     )
     parser.add_argument(
         "--output-directory",
         type=Path,
         default=Path(str(config["external_asset_directory"])),
+        help="Ignored local directory for optional distribution assets.",
     )
     return parser.parse_args()
 
@@ -102,7 +108,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     outputs = build_assets(args.pbix, args.output_directory)
-    print("Release assets created:")
+    print("Optional distribution assets created:")
     for path in outputs:
         print(f"- {path}")
     return 0

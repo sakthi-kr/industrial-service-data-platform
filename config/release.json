@@ -3,7 +3,7 @@
   "tag": "v1.0.0",
   "release_date": "2026-08-06",
   "repository": "sakthi-kr/industrial-service-data-platform",
-  "external_asset_directory": "C:/Users/admin/Downloads/Seimens/release-assets",
-  "power_bi_source": "C:/Users/admin/Downloads/Seimens/power-bi-working/industrial-service-dashboard.pbix",
+  "external_asset_directory": "dist/v1.0.0",
+  "power_bi_source": "industrial-service-dashboard.pbix",
   "dashboard_pdf": "dashboards/power_bi/exports/industrial_service_dashboard.pdf"
 }
