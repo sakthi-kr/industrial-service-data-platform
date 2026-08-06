@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this project, please cite it using the metadata below."
+title: "Industrial Service Data & AI Platform"
+type: software
+authors:
+  - family-names: "Ravichandran"
+    given-names: "Sakthi"
+version: 1.0.0
+date-released: 2026-08-06
+url: "https://github.com/sakthi-kr/industrial-service-data-platform"
+repository-code: "https://github.com/sakthi-kr/industrial-service-data-platform"
+license: MIT
+keywords:
+  - industrial analytics
+  - data engineering
+  - Snowflake
+  - dbt
+  - Power BI
+  - machine learning

@@ -1,175 +1,175 @@
 # Industrial Service Data & AI Platform
 
-This project models day-to-day service operations for industrial equipment. It brings together customer cases, assets, work orders, spare parts, equipment alerts, and technician notes so the data can be checked, transformed, and used for reporting.
+[![CI](https://github.com/sakthi-kr/industrial-service-data-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/sakthi-kr/industrial-service-data-platform/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/sakthi-kr/industrial-service-data-platform/actions/workflows/codeql.yml/badge.svg)](https://github.com/sakthi-kr/industrial-service-data-platform/actions/workflows/codeql.yml)
+[![Python 3.10–3.12](https://img.shields.io/badge/python-3.10--3.12-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-The project uses synthetic data. It is not intended to reproduce a full ERP or CRM system. The aim is to build a complete and testable workflow from source data to an analytics layer, with enough operational detail to make the results useful rather than purely illustrative.
+A reproducible data platform for industrial equipment service operations. It connects synthetic ERP, CRM, equipment-monitoring, and technician-note data to Snowflake, dbt, Power BI, and a small evaluated machine-learning enrichment workflow.
 
-## Project status
-The repository now contains the complete reproducible data workflow: deterministic industrial source data, live-verified Snowflake infrastructure, idempotent ingestion, tested dbt models, independently reconciled KPIs, a documented Power BI report, and evaluated technician-note enrichment. Operational health checks, recovery drills, cost controls, security workflows, and incident runbooks are also implemented.
+The project is designed as a portfolio-scale implementation rather than a mock enterprise product. The emphasis is on evidence: deterministic source data, explicit business rules, tested transformations, independently reconciled KPIs, access controls, operational checks, and documented limitations.
 
-The remaining work is the final repository audit, versioned release, and portfolio-ready project summary.
+## What this project demonstrates
 
-## Planned data flow
+- deterministic generation of 13 related industrial-service datasets containing 107,724 records;
+- schema validation, rejected-record handling, audit logging, and duplicate-safe Snowflake ingestion;
+- role-based Snowflake infrastructure with cost controls and managed-access schemas;
+- dbt staging, dimensional, fact, snapshot, and analytics models with extensive data tests;
+- independent Python-versus-Snowflake reconciliation of 12 operational KPIs;
+- a two-page Power BI report with filter-safe DAX measures and reviewable PDF/screenshots;
+- evaluated TF-IDF and logistic-regression enrichment for 5,000 technician notes;
+- health checks, recovery drills, CI, CodeQL, dependency review, and incident runbooks.
 
-    ERP-style exports        CRM-style exports
-             \                    /
-              \                  /
-               Python ingestion
-                      |
-              Snowflake raw layer
-                      |
-          dbt models and data tests
-                      |
-             Analytics data models
-                 /          \
-          Power BI      Note enrichment
+## Architecture
 
-## Planned scope
+```mermaid
+flowchart LR
+    ERP[ERP-style CSV exports] --> GEN[Deterministic source generation]
+    CRM[CRM-style CSV exports] --> GEN
+    MON[Equipment alerts] --> GEN
+    NOTES[Technician notes] --> GEN
 
-The finished project will include:
+    GEN --> VAL[Python validation]
+    VAL --> ING[Idempotent Python ingestion]
+    ING --> RAW[(Snowflake RAW)]
+    RAW --> STG[dbt staging views]
+    STG --> CORE[dbt dimensions, facts and snapshot]
+    CORE --> MARTS[(Snowflake ANALYTICS marts)]
 
-- synthetic data for customers, sites, assets, service cases, work orders, parts, alerts, and technician notes;
-- Python ingestion with schema validation, batch tracking, duplicate protection, and rejected-record handling;
-- Snowflake schemas for raw, staging, core, analytics, and operational data;
-- dbt transformations, tests, snapshots, and generated documentation;
-- SQL and Python checks to confirm that reported service metrics are calculated correctly;
-- a Power BI report for service operations and asset-level analysis;
-- a small evaluated enrichment step for classifying and summarising technician notes;
-- automated tests, continuous integration, access-control scripts, and an operations runbook.
+    MARTS --> PBI[Power BI report]
+    MARTS --> REC[Python KPI reconciliation]
+    NOTES --> ML[TF-IDF + logistic regression]
+    ML --> ENRICH[Technician-note enrichment mart]
+    ENRICH --> PBI
 
-## Repository layout
+    OPS[Health checks and recovery drills] --> ING
+    OPS --> MARTS
+    CI[CI, CodeQL and dependency review] --> VAL
+    CI --> STG
+```
 
-- `config/` — project and data-generation configuration
-- `dashboards/` — dashboard documentation, screenshots, and exports
-- `data/` — local raw, generated, and sample data
-- `dbt/` — dbt models, tests, snapshots, and project configuration
-- `docs/` — architecture notes, data definitions, and runbooks
-- `scripts/` — setup and data-generation scripts
-- `sql/` — Snowflake setup and analysis SQL
-- `src/industrial_service_platform/` — Python package
-- `tests/` — automated tests
+A more detailed component and trust-boundary description is available in [`docs/architecture.md`](docs/architecture.md).
 
-## Local development
+## Evidence at a glance
 
-The project currently targets Python 3.10.
+| Area | Evidence |
+|---|---|
+| Source data | 13 deterministic datasets, 107,724 records, fixed seed and file hashes |
+| Ingestion | 13 raw tables, audit records, zero duplicate inserts on rerun |
+| Analytics | 12 KPIs independently reconciled between Python and Snowflake |
+| Reporting | Two Power BI pages, 18 DAX measures, PDF and sanitized screenshots |
+| Machine learning | 5,000 predictions, grouped holdout split, macro-F1 reporting, masked-label challenge |
+| Operations | Live platform health checks, six recovery drills, rollback test, cost review |
+| Quality | Python 3.10–3.12 CI, Ruff, mypy, pytest, dbt tests, CodeQL and dependency review |
 
-    py -3.10 -m venv .venv
-    source .venv/Scripts/activate
-    python -m pip install --upgrade pip setuptools wheel
-    python -m pip install -e ".[dev]"
+## Dashboard
 
-Run the local checks with:
+| Service operations | Asset and customer analysis |
+|---|---|
+| ![Service operations dashboard](dashboards/power_bi/screenshots/service_operations_overview.png) | ![Asset and customer analysis](dashboards/power_bi/screenshots/asset_customer_analysis.png) |
 
-    python -m ruff check .
-    python -m ruff format --check .
-    python -m mypy src
-    python -m pytest
+The reviewable PDF export is available at [`dashboards/power_bi/exports/industrial_service_dashboard.pdf`](dashboards/power_bi/exports/industrial_service_dashboard.pdf). The Power BI working file is distributed with the GitHub release rather than committed as an opaque binary.
 
-Run all configured pre-commit checks with:
+## Repository structure
 
-    pre-commit run --all-files
+```text
+config/                         Project, generation, reconciliation and health configuration
+dashboards/power_bi/             Theme, DAX, report specification, screenshots and PDF export
+data/samples/                   Small public samples and sanitized verification summaries
+dbt/                            Sources, staging views, core models, snapshots, marts and tests
+docs/                           Architecture, data model, verification records and runbooks
+scripts/                        Reproducible entry points and repository validators
+sql/                            Snowflake setup, verification, analytics and operational SQL
+src/industrial_service_platform Python package for generation, ingestion, ML and operations
+tests/                          Automated tests
+```
 
-## Synthetic data generation
+## Reproduce the workflow
 
-The default configuration generates the full ERP-, CRM-, monitoring-, and field-service-style
-source files locally. Generated files are excluded from Git; small samples and validation metadata
-are kept in `data/samples/source_data/`.
+### Local environment
 
-    python -m industrial_service_platform generate-data
-    python -m industrial_service_platform validate-data
+```bash
+py -3.10 -m venv .venv
+source .venv/Scripts/activate
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -e ".[dev]"
+```
 
-The generator uses a fixed seed and reporting timestamp. Repeated runs with the same configuration
-produce the same file content and SHA-256 hashes.
+Copy `.env.example` to `.env` and add private Snowflake connection values. Copy `dbt/profiles.example.yml` to `dbt/profiles.yml`. Both local files are ignored by Git.
 
+### Generate and validate source data
 
-## Snowflake infrastructure
+```bash
+python -m industrial_service_platform generate-data
+python -m industrial_service_platform validate-data
+python -m industrial_service_platform prepare-ingestion
+```
 
-The Snowflake setup creates an X-Small warehouse, a monthly resource monitor, five managed-access
-schemas, four functional roles, future grants, and operations tables for ingestion and data-quality
-audit records.
+### Load Snowflake and build analytics models
 
-Setup and access checks are documented in `docs/snowflake_setup.md` and
-`docs/snowflake_verification.md`. The verification record includes the completed live deployment and
-least-privilege access checks.
+```bash
+python -m industrial_service_platform test-snowflake
+python -m industrial_service_platform create-raw-tables
+python -m industrial_service_platform ingest
+python scripts/run_dbt.py build --fail-fast
+```
 
-## Python ingestion pipeline
+### Reconcile metrics and evaluate enrichment
 
-The ingestion command validates all configured CSV files before connecting to Snowflake, separates
-accepted and rejected rows, creates missing raw tables, and loads accepted records in batches. It
-also writes run-level and dataset-level audit records. A deterministic record hash prevents
-duplicate inserts when the same files are loaded again.
+```bash
+python scripts/reconcile_analytics.py
+python scripts/train_note_enrichment.py
+python scripts/publish_note_enrichment.py
+python scripts/run_dbt.py build --select +mart_technician_note_enrichment --fail-fast
+```
 
-    python -m industrial_service_platform prepare-ingestion
-    python -m industrial_service_platform test-snowflake
-    python -m industrial_service_platform create-raw-tables
-    python -m industrial_service_platform ingest
+### Check operational health
 
-Connection setup, live verification, expected outputs, and common errors are documented in
-`docs/ingestion_setup.md`.
+```bash
+python scripts/run_recovery_drills.py
+python scripts/check_platform_health.py
+```
 
-## dbt transformations and data quality
-The dbt project converts source-preserving raw tables into typed staging views, reusable dimensions
-and facts, an asset-history snapshot, and reporting marts. Generic and singular tests check keys,
-relationships, allowed values, expected row counts, timestamps, financial rules, and KPI bounds.
-    cp dbt/profiles.example.yml dbt/profiles.yml
-    python scripts/run_dbt.py debug
-    python scripts/run_dbt.py parse --no-partial-parse
-    python scripts/run_dbt.py build
-    python scripts/run_dbt.py docs generate
-Setup, model design, live verification, and troubleshooting are documented in `docs/dbt_setup.md`,
-`docs/dbt_model_design.md`, and `docs/dbt_verification.md`.
+The full run order, expected outputs, external software steps, and verification gates are documented in [`docs/reproducibility.md`](docs/reproducibility.md).
 
-## Analytics metric reconciliation
-Twelve warehouse KPIs are compared with an independent Python implementation that reads the
-generated source files. Counts must match exactly, while rates, durations, and cost use explicit
-metric-specific tolerances.
-    python -m industrial_service_platform generate-data
-    python scripts/run_dbt.py build --fail-fast
-    python scripts/reconcile_analytics.py
-Definitions, tolerances, verification steps, and mismatch diagnosis are documented in
-`docs/analytics_reconciliation.md` and `docs/analytics_verification.md`.
+## Design decisions
 
-## Power BI reporting
-The Power BI report uses four tested analytics marts, a documented customer-to-asset relationship,
-filter-safe DAX measures, a tracked JSON theme, and two report pages covering service operations and
-asset/customer analysis. The binary `.pbix` file stays outside Git; sanitized screenshots and a PDF
-export provide reviewable evidence.
-    python scripts/validate_power_bi_assets.py
-Connection steps, the report model, measures, visual specification, and verification process are
-documented in `docs/power_bi_setup.md` and `dashboards/power_bi/`.
+**Source-preserving raw layer.** Raw Snowflake tables keep source values as text and add ingestion metadata. Typing and business-rule enforcement happen in dbt staging models, making source problems visible instead of silently coercing them.
 
-## Technician-note enrichment
-A reproducible sparse-text pipeline classifies fault category and triage priority from technician
-notes and permitted operational context. Evaluation uses a service-order-grouped holdout split,
-reports macro F1 and accuracy, and includes a masked-label challenge to expose dependence on direct
-fault phrases. Components, service-team routing, and summaries are generated deterministically from
-validated labels rather than an external language-model API.
-    python -m industrial_service_platform generate-data
-    python scripts/train_note_enrichment.py
-    python scripts/publish_note_enrichment.py
-    python scripts/run_dbt.py build --select mart_technician_note_enrichment --fail-fast
-Design choices, limitations, Snowflake publication, and verification are documented in
-`docs/note_enrichment_design.md`, `docs/note_enrichment_setup.md`, and
-`docs/note_enrichment_verification.md`.
+**Duplicate-safe loading.** Each complete source row receives a deterministic SHA-256 record hash. Reprocessing the same files creates a new audit run without duplicating business records.
 
-## Operational controls
-A live health command checks ingestion status, freshness, source and mart row counts, and data
-quality. It also checks technician-note validity and warehouse cost settings. Recovery drills
-prove that failed runs, stale data, rejection spikes, row-count drift, invalid enrichment outputs,
-and warehouse misconfiguration are detected before publication.
+**Independent KPI validation.** The Python reference implementation reads generated CSV files rather than reusing warehouse SQL. Counts must match exactly; rates, durations, and currency use explicit tolerances.
 
-    python scripts/run_recovery_drills.py
-    python scripts/check_platform_health.py
-    python scripts/validate_operational_assets.py
+**Small, explainable enrichment model.** Technician-note enrichment uses sparse text features and logistic regression instead of an external language-model API. A service-order-grouped split prevents related notes from crossing train and test sets, and a masked-label challenge exposes dependence on direct fault phrases.
 
-Incident response, recovery steps, security controls, and live verification are documented in
-`docs/operations_runbook.md`, `docs/recovery_procedures.md`,
-`docs/security_and_cost_controls.md`, and `docs/operational_verification.md`.
+**Least privilege and bounded cost.** Loader, transformer, analyst, and administrator roles have separate responsibilities. The warehouse is X-Small, auto-suspends after 60 seconds, and is attached to a resource monitor.
 
-## Data and credentials
+## Limitations
 
-Only generated data and optional public sandbox data will be used. Real customer data, credentials, Snowflake keys, local dbt profiles, generated datasets, and Power BI working files are excluded from version control.
+- All business data is synthetic; no claim is made about production performance on real service records.
+- The generated notes contain strong lexical signals, so the normal holdout score is not evidence of broad language understanding. The masked-label challenge documents this limitation.
+- SLA calculations use elapsed hours rather than customer-specific working calendars and holiday rules.
+- The Power BI report is validated against a small imported dataset; deployment and scheduled refresh in the Power BI Service are outside scope.
+- Operational health checks are command-driven rather than a continuously hosted monitoring service.
+
+## Documentation
+
+Start with:
+
+- [`docs/architecture.md`](docs/architecture.md) — components, data flow and trust boundaries;
+- [`docs/reproducibility.md`](docs/reproducibility.md) — complete run order and verification gates;
+- [`docs/portfolio_summary.md`](docs/portfolio_summary.md) — concise project outcomes and interview discussion points;
+- [`docs/data_dictionary.md`](docs/data_dictionary.md) and [`docs/kpi_catalogue.md`](docs/kpi_catalogue.md) — source fields and metric definitions;
+- [`docs/operations_runbook.md`](docs/operations_runbook.md) and [`docs/recovery_procedures.md`](docs/recovery_procedures.md) — health and recovery procedures.
+
+## Security and data handling
+
+The repository excludes credentials, Snowflake keys, local dbt profiles, generated full datasets, private screenshots, and the Power BI working file. Security reporting and supported-version information are in [`SECURITY.md`](SECURITY.md).
+
+## Release
+
+The first complete portfolio release is `v1.0.0`. Release notes are in [`docs/release_notes_v1.0.0.md`](docs/release_notes_v1.0.0.md), and changes are recorded in [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Licence
 
-This project is released under the MIT License.
+Released under the [MIT License](LICENSE).
