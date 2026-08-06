@@ -1,0 +1,109 @@
+{
+  "overall_status": "PASS",
+  "checks": [
+    {
+      "name": "latest_pipeline_status",
+      "status": "PASS"
+    },
+    {
+      "name": "latest_pipeline_freshness",
+      "status": "PASS"
+    },
+    {
+      "name": "latest_pipeline_volume",
+      "status": "PASS"
+    },
+    {
+      "name": "latest_pipeline_rejection_rate",
+      "status": "PASS"
+    },
+    {
+      "name": "warehouse_size",
+      "status": "PASS"
+    },
+    {
+      "name": "warehouse_auto_suspend",
+      "status": "PASS"
+    },
+    {
+      "name": "warehouse_auto_resume",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.ERP_CUSTOMERS",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.ERP_SITES",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.ERP_ASSETS",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.CRM_SERVICE_CONTRACTS",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.CRM_CUSTOMER_CASES",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.CRM_CASE_STATUS_HISTORY",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.ERP_TECHNICIANS",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.ERP_SERVICE_ORDERS",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.ERP_PARTS",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.ERP_SERVICE_ORDER_PARTS",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.ERP_SERVICE_COSTS",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.MONITORING_EQUIPMENT_ALERTS",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.FIELD_SERVICE_TECHNICIAN_NOTES",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.ANALYTICS.MART_ASSET_RELIABILITY",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.ANALYTICS.MART_CUSTOMER_PERFORMANCE",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.ANALYTICS.MART_KPI_SUMMARY",
+      "status": "PASS"
+    },
+    {
+      "name": "relation_row_count:INDUSTRIAL_SERVICE_DB.ANALYTICS.MART_TECHNICIAN_NOTE_ENRICHMENT",
+      "status": "PASS"
+    },
+    {
+      "name": "data_quality_failures",
+      "status": "PASS"
+    },
+    {
+      "name": "note_enrichment_validity",
+      "status": "PASS"
+    }
+  ]
+}

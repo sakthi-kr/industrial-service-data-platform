@@ -5,11 +5,9 @@ This project models day-to-day service operations for industrial equipment. It b
 The project uses synthetic data. It is not intended to reproduce a full ERP or CRM system. The aim is to build a complete and testable workflow from source data to an analytics layer, with enough operational detail to make the results useful rather than purely illustrative.
 
 ## Project status
-The repository includes a reproducible Python environment, a documented business and data model,
-deterministic synthetic source datasets, live-verified Snowflake infrastructure, a validated
-idempotent ingestion pipeline, tested dbt models, independent reconciliation of twelve service and
-reliability KPIs, a documented two-page Power BI report, and evaluated technician-note enrichment.
-Operational hardening and the final repository release are the remaining implementation areas.
+The repository now contains the complete reproducible data workflow: deterministic industrial source data, live-verified Snowflake infrastructure, idempotent ingestion, tested dbt models, independently reconciled KPIs, a documented Power BI report, and evaluated technician-note enrichment. Operational health checks, recovery drills, cost controls, security workflows, and incident runbooks are also implemented.
+
+The remaining work is the final repository audit, versioned release, and portfolio-ready project summary.
 
 ## Planned data flow
 
@@ -153,6 +151,20 @@ validated labels rather than an external language-model API.
 Design choices, limitations, Snowflake publication, and verification are documented in
 `docs/note_enrichment_design.md`, `docs/note_enrichment_setup.md`, and
 `docs/note_enrichment_verification.md`.
+
+## Operational controls
+A live health command checks ingestion status, freshness, source and mart row counts, and data
+quality. It also checks technician-note validity and warehouse cost settings. Recovery drills
+prove that failed runs, stale data, rejection spikes, row-count drift, invalid enrichment outputs,
+and warehouse misconfiguration are detected before publication.
+
+    python scripts/run_recovery_drills.py
+    python scripts/check_platform_health.py
+    python scripts/validate_operational_assets.py
+
+Incident response, recovery steps, security controls, and live verification are documented in
+`docs/operations_runbook.md`, `docs/recovery_procedures.md`,
+`docs/security_and_cost_controls.md`, and `docs/operational_verification.md`.
 
 ## Data and credentials
 

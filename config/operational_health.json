@@ -1,0 +1,40 @@
+{
+  "snowflake_role": "ISP_ADMIN",
+  "output_path": "data/generated/operational_health.json",
+  "recovery_output_path": "data/generated/recovery_drill_report.json",
+  "pipeline": {
+    "required_status": "COMPLETED",
+    "max_age_hours": 96.0,
+    "minimum_rows_received": 107724,
+    "max_rejection_rate": 0.001
+  },
+  "warehouse": {
+    "name": "INDUSTRIAL_SERVICE_WH",
+    "expected_size": "X-Small",
+    "max_auto_suspend_seconds": 60,
+    "auto_resume_required": true
+  },
+  "quality": {
+    "max_failed_checks": 0,
+    "max_invalid_enrichment_rows": 0
+  },
+  "relations": [
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.ERP_CUSTOMERS", "expected_rows": 150},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.ERP_SITES", "expected_rows": 250},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.ERP_ASSETS", "expected_rows": 1000},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.CRM_SERVICE_CONTRACTS", "expected_rows": 500},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.CRM_CUSTOMER_CASES", "expected_rows": 8000},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.CRM_CASE_STATUS_HISTORY", "expected_rows": 37561},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.ERP_TECHNICIANS", "expected_rows": 100},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.ERP_SERVICE_ORDERS", "expected_rows": 6000},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.ERP_PARTS", "expected_rows": 300},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.ERP_SERVICE_ORDER_PARTS", "expected_rows": 12000},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.ERP_SERVICE_COSTS", "expected_rows": 16863},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.MONITORING_EQUIPMENT_ALERTS", "expected_rows": 20000},
+    {"relation": "INDUSTRIAL_SERVICE_DB.RAW.FIELD_SERVICE_TECHNICIAN_NOTES", "expected_rows": 5000},
+    {"relation": "INDUSTRIAL_SERVICE_DB.ANALYTICS.MART_ASSET_RELIABILITY", "expected_rows": 1000},
+    {"relation": "INDUSTRIAL_SERVICE_DB.ANALYTICS.MART_CUSTOMER_PERFORMANCE", "expected_rows": 150},
+    {"relation": "INDUSTRIAL_SERVICE_DB.ANALYTICS.MART_KPI_SUMMARY", "expected_rows": 1},
+    {"relation": "INDUSTRIAL_SERVICE_DB.ANALYTICS.MART_TECHNICIAN_NOTE_ENRICHMENT", "expected_rows": 5000}
+  ]
+}

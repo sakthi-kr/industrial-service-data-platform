@@ -1,0 +1,41 @@
+{
+  "all_drills_passed": true,
+  "drills": [
+    {
+      "scenario": "failed_pipeline",
+      "expected_failed_check": "latest_pipeline_status",
+      "detected": true,
+      "overall_status": "FAIL"
+    },
+    {
+      "scenario": "stale_pipeline",
+      "expected_failed_check": "latest_pipeline_freshness",
+      "detected": true,
+      "overall_status": "FAIL"
+    },
+    {
+      "scenario": "excessive_rejections",
+      "expected_failed_check": "latest_pipeline_rejection_rate",
+      "detected": true,
+      "overall_status": "FAIL"
+    },
+    {
+      "scenario": "relation_count_drift",
+      "expected_failed_check": "relation_row_count:INDUSTRIAL_SERVICE_DB.RAW.ERP_CUSTOMERS",
+      "detected": true,
+      "overall_status": "FAIL"
+    },
+    {
+      "scenario": "invalid_enrichment",
+      "expected_failed_check": "note_enrichment_validity",
+      "detected": true,
+      "overall_status": "FAIL"
+    },
+    {
+      "scenario": "warehouse_cost_misconfiguration",
+      "expected_failed_check": "warehouse_auto_suspend",
+      "detected": true,
+      "overall_status": "FAIL"
+    }
+  ]
+}

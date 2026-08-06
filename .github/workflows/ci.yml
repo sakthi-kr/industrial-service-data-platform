@@ -16,6 +16,7 @@ jobs:
   quality:
     name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     strategy:
       fail-fast: false
@@ -41,6 +42,9 @@ jobs:
       - name: Install project and development tools
         run: python -m pip install -e ".[dev]"
 
+      - name: Verify dependency consistency
+        run: python -m pip check
+
       - name: Run Ruff lint checks
         run: python -m ruff check .
 
@@ -53,11 +57,26 @@ jobs:
       - name: Run tests
         run: python -m pytest
 
+      - name: Validate Snowflake infrastructure assets
+        run: python scripts/validate_snowflake_setup.py
+
       - name: Validate dbt project structure
         run: python scripts/validate_dbt_project.py
 
+      - name: Validate analytics reconciliation assets
+        run: python scripts/validate_analytics_assets.py
+
+      - name: Validate Power BI assets
+        run: python scripts/validate_power_bi_assets.py
+
       - name: Validate technician-note enrichment assets
         run: python scripts/validate_note_enrichment_assets.py
+
+      - name: Run recovery-control drills
+        run: python scripts/run_recovery_drills.py
+
+      - name: Validate operational assets
+        run: python scripts/validate_operational_assets.py
 
       - name: Parse dbt project
         env:
