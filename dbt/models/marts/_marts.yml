@@ -1,5 +1,4 @@
 version: 2
-
 models:
   - name: mart_service_operations
     description: Monthly service operations metrics by region, priority, and fault category.
@@ -75,4 +74,51 @@ models:
         data_tests: [not_null]
       - name: total_service_cost_eur
         description: Sum of valid service cost records in EUR.
+        data_tests: [not_null]
+  - name: mart_technician_note_enrichment
+    description: Evaluated structured enrichment for every generated technician note.
+    data_tests:
+      - row_count_equals:
+          arguments:
+            expected_count: 5000
+    columns:
+      - name: note_id
+        description: Source technician-note identifier.
+        data_tests: [not_null, unique]
+      - name: model_version
+        description: Version of the fitted enrichment pipeline.
+        data_tests: [not_null]
+      - name: predicted_fault_category
+        description: Fault category predicted from note text and permitted context.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - BEARING
+                  - CONTROL_SYSTEM
+                  - ELECTRICAL
+                  - FLOW
+                  - INSPECTION
+                  - LUBRICATION
+                  - OTHER
+                  - OVERHEATING
+                  - PRESSURE
+                  - SEAL
+                  - VIBRATION
+      - name: predicted_priority
+        description: Synthetic triage priority predicted by the classifier.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [LOW, MEDIUM, HIGH, CRITICAL]
+      - name: output_valid
+        description: Whether the structured prediction passed schema validation.
+        data_tests: [not_null]
+      - name: fault_confidence
+        description: Maximum class probability for the fault classifier.
+        data_tests: [not_null]
+      - name: priority_confidence
+        description: Maximum class probability for the priority classifier.
         data_tests: [not_null]

@@ -1,0 +1,47 @@
+{
+  "all_thresholds_passed": true,
+  "limitations": [
+    "Labels are derived from synthetic operational records rather than human annotation.",
+    "Generated notes often contain direct fault or component phrases.",
+    "The masked-label challenge is reported to expose lexical dependence.",
+    "The generated summary is deterministic and does not use an external language model."
+  ],
+  "masked_label_challenge": {
+    "component_accuracy": 0.275148,
+    "failure_rate": 0.0,
+    "fault_accuracy": 0.275148,
+    "fault_macro_f1": 0.171664,
+    "mean_latency_ms": 1.436228,
+    "priority_accuracy": 0.935897,
+    "priority_macro_f1": 0.9411,
+    "recommended_team_accuracy": 0.482249,
+    "structured_output_validity_rate": 1.0
+  },
+  "minimum_metrics": {
+    "component_accuracy": 0.85,
+    "fault_macro_f1": 0.85,
+    "priority_macro_f1": 0.8,
+    "structured_output_validity_rate": 1.0
+  },
+  "model_version": "tfidf-logreg-v1",
+  "service_order_overlap": 0,
+  "standard_holdout": {
+    "component_accuracy": 0.938856,
+    "failure_rate": 0.0,
+    "fault_accuracy": 0.938856,
+    "fault_macro_f1": 0.920215,
+    "mean_latency_ms": 1.433247,
+    "priority_accuracy": 0.990138,
+    "priority_macro_f1": 0.975949,
+    "recommended_team_accuracy": 0.943787,
+    "structured_output_validity_rate": 1.0
+  },
+  "test_rows": 1014,
+  "threshold_results": {
+    "component_accuracy": true,
+    "fault_macro_f1": true,
+    "priority_macro_f1": true,
+    "structured_output_validity_rate": true
+  },
+  "train_rows": 3986
+}

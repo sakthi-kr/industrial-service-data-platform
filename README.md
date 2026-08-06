@@ -8,8 +8,8 @@ The project uses synthetic data. It is not intended to reproduce a full ERP or C
 The repository includes a reproducible Python environment, a documented business and data model,
 deterministic synthetic source datasets, live-verified Snowflake infrastructure, a validated
 idempotent ingestion pipeline, tested dbt models, independent reconciliation of twelve service and
-reliability KPIs, and a documented two-page Power BI report. Technician-note enrichment is the next
-implementation area.
+reliability KPIs, a documented two-page Power BI report, and evaluated technician-note enrichment.
+Operational hardening and the final repository release are the remaining implementation areas.
 
 ## Planned data flow
 
@@ -139,6 +139,20 @@ export provide reviewable evidence.
     python scripts/validate_power_bi_assets.py
 Connection steps, the report model, measures, visual specification, and verification process are
 documented in `docs/power_bi_setup.md` and `dashboards/power_bi/`.
+
+## Technician-note enrichment
+A reproducible sparse-text pipeline classifies fault category and triage priority from technician
+notes and permitted operational context. Evaluation uses a service-order-grouped holdout split,
+reports macro F1 and accuracy, and includes a masked-label challenge to expose dependence on direct
+fault phrases. Components, service-team routing, and summaries are generated deterministically from
+validated labels rather than an external language-model API.
+    python -m industrial_service_platform generate-data
+    python scripts/train_note_enrichment.py
+    python scripts/publish_note_enrichment.py
+    python scripts/run_dbt.py build --select mart_technician_note_enrichment --fail-fast
+Design choices, limitations, Snowflake publication, and verification are documented in
+`docs/note_enrichment_design.md`, `docs/note_enrichment_setup.md`, and
+`docs/note_enrichment_verification.md`.
 
 ## Data and credentials
 

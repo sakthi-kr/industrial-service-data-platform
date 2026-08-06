@@ -13,6 +13,7 @@ authors = [
   { name = "Sakthi Ravichandran" }
 ]
 dependencies = [
+  "scikit-learn==1.7.2",
   "snowflake-connector-python==4.2.0",
 ]
 

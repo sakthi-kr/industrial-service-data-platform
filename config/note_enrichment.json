@@ -1,0 +1,24 @@
+{
+  "source_directory": "data/generated",
+  "output_directory": "data/generated/note_enrichment",
+  "model_path": "data/generated/note_enrichment/model.joblib",
+  "evaluation_path": "data/generated/note_enrichment/evaluation.json",
+  "predictions_path": "data/generated/note_enrichment/predictions.csv",
+  "labeled_dataset_path": "data/generated/note_enrichment/labeled_notes.csv",
+  "public_sample_directory": "data/samples/note_enrichment",
+  "model_version": "tfidf-logreg-v1",
+  "random_seed": 20260806,
+  "test_size": 0.2,
+  "max_features": 12000,
+  "minimum_metrics": {
+    "fault_macro_f1": 0.85,
+    "priority_macro_f1": 0.8,
+    "component_accuracy": 0.85,
+    "structured_output_validity_rate": 1.0
+  },
+  "snowflake_role": "ISP_TRANSFORMER",
+  "snowflake_database": "INDUSTRIAL_SERVICE_DB",
+  "snowflake_schema": "STAGING",
+  "snowflake_table": "NOTE_ENRICHMENT_RESULTS",
+  "batch_size": 500
+}

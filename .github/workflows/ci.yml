@@ -56,6 +56,9 @@ jobs:
       - name: Validate dbt project structure
         run: python scripts/validate_dbt_project.py
 
+      - name: Validate technician-note enrichment assets
+        run: python scripts/validate_note_enrichment_assets.py
+
       - name: Parse dbt project
         env:
           SNOWFLAKE_ACCOUNT: example-account

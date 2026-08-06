@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: enrichment
+    description: Evaluated Python technician-note enrichment outputs published to Snowflake.
+    database: INDUSTRIAL_SERVICE_DB
+    schema: STAGING
+    tables:
+      - name: note_enrichment_results
+        identifier: NOTE_ENRICHMENT_RESULTS
+        columns:
+          - name: note_id
+            data_tests: [not_null]
+          - name: model_version
+            data_tests: [not_null]
+          - name: predicted_fault_category
+            data_tests: [not_null]
+          - name: predicted_priority
+            data_tests: [not_null]
+          - name: output_valid
+            data_tests: [not_null]
