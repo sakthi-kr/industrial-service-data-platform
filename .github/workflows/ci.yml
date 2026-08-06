@@ -48,7 +48,7 @@ jobs:
         run: python -m ruff format --check .
 
       - name: Run mypy
-        run: python -m mypy src
+        run: python -m mypy --python-version "${{ matrix.python-version }}" src
 
       - name: Run tests
         run: python -m pytest
