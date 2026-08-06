@@ -1,0 +1,17 @@
+{
+  "report_name": "Industrial Service Operations",
+  "pages": [
+    "Service Operations",
+    "Asset and Customer Analysis"
+  ],
+  "connection_mode": "Import",
+  "snowflake_role": "ISP_ANALYST",
+  "database": "INDUSTRIAL_SERVICE_DB",
+  "schema": "ANALYTICS",
+  "tables": [
+    "MART_SERVICE_OPERATIONS",
+    "MART_ASSET_RELIABILITY",
+    "MART_CUSTOMER_PERFORMANCE",
+    "MART_KPI_SUMMARY"
+  ]
+}

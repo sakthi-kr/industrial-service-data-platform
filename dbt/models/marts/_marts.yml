@@ -10,9 +10,20 @@ models:
       - name: case_count
         description: Number of cases in the reporting group.
         data_tests: [not_null]
-
+      - name: response_sla_eligible_count
+        description: Cases with a final response SLA outcome.
+        data_tests: [not_null]
+      - name: response_sla_met_count
+        description: Eligible cases that met the response SLA.
+        data_tests: [not_null]
+      - name: resolution_sla_eligible_count
+        description: Cases with a final resolution SLA outcome.
+        data_tests: [not_null]
+      - name: resolution_sla_met_count
+        description: Eligible cases that met the resolution SLA.
+        data_tests: [not_null]
   - name: mart_asset_reliability
-    description: Asset-level service, alert, downtime, and cost summary.
+    description: Asset-level service, alert, downtime, cost, customer, and site summary.
     data_tests:
       - row_count_equals:
           arguments:
@@ -24,7 +35,12 @@ models:
       - name: asset_id
         description: Source asset identifier.
         data_tests: [not_null, unique]
-
+      - name: customer_id
+        description: Customer identifier used by the Power BI model relationship.
+        data_tests: [not_null]
+      - name: site_id
+        description: Site identifier for asset-level filtering.
+        data_tests: [not_null]
   - name: mart_customer_performance
     description: Customer-level asset, case, SLA, downtime, and cost summary.
     data_tests:
@@ -38,7 +54,6 @@ models:
       - name: customer_id
         description: Source customer identifier.
         data_tests: [not_null, unique]
-
   - name: mart_kpi_summary
     description: Single-row KPI summary reconciled against independent Python calculations.
     data_tests:

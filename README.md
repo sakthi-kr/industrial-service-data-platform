@@ -7,9 +7,9 @@ The project uses synthetic data. It is not intended to reproduce a full ERP or C
 ## Project status
 The repository includes a reproducible Python environment, a documented business and data model,
 deterministic synthetic source datasets, live-verified Snowflake infrastructure, a validated
-idempotent ingestion pipeline, tested dbt models, and independent reconciliation of twelve service
-and reliability KPIs. Power BI reporting and technician-note enrichment are the next implementation
-areas.
+idempotent ingestion pipeline, tested dbt models, independent reconciliation of twelve service and
+reliability KPIs, and a documented two-page Power BI report. Technician-note enrichment is the next
+implementation area.
 
 ## Planned data flow
 
@@ -113,7 +113,6 @@ Connection setup, live verification, expected outputs, and common errors are doc
 The dbt project converts source-preserving raw tables into typed staging views, reusable dimensions
 and facts, an asset-history snapshot, and reporting marts. Generic and singular tests check keys,
 relationships, allowed values, expected row counts, timestamps, financial rules, and KPI bounds.
-
     cp dbt/profiles.example.yml dbt/profiles.yml
     python scripts/run_dbt.py debug
     python scripts/run_dbt.py parse --no-partial-parse
@@ -126,12 +125,20 @@ Setup, model design, live verification, and troubleshooting are documented in `d
 Twelve warehouse KPIs are compared with an independent Python implementation that reads the
 generated source files. Counts must match exactly, while rates, durations, and cost use explicit
 metric-specific tolerances.
-
     python -m industrial_service_platform generate-data
     python scripts/run_dbt.py build --fail-fast
     python scripts/reconcile_analytics.py
 Definitions, tolerances, verification steps, and mismatch diagnosis are documented in
 `docs/analytics_reconciliation.md` and `docs/analytics_verification.md`.
+
+## Power BI reporting
+The Power BI report uses four tested analytics marts, a documented customer-to-asset relationship,
+filter-safe DAX measures, a tracked JSON theme, and two report pages covering service operations and
+asset/customer analysis. The binary `.pbix` file stays outside Git; sanitized screenshots and a PDF
+export provide reviewable evidence.
+    python scripts/validate_power_bi_assets.py
+Connection steps, the report model, measures, visual specification, and verification process are
+documented in `docs/power_bi_setup.md` and `dashboards/power_bi/`.
 
 ## Data and credentials
 

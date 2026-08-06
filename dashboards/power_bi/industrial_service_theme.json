@@ -1,0 +1,16 @@
+{
+  "name": "Industrial Service Operations",
+  "dataColors": [
+    "#0B4F6C",
+    "#01BAEF",
+    "#20BF55",
+    "#F2C14E",
+    "#F78154",
+    "#8D6A9F",
+    "#5C677D",
+    "#D7263D"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#1F2937",
+  "tableAccent": "#0B4F6C"
+}

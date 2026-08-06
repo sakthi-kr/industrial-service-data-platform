@@ -1,6 +1,13 @@
-
 with assets as (
   select * from {{ ref('dim_asset') }} where is_current
+),
+
+sites as (
+  select * from {{ ref('dim_site') }}
+),
+
+customers as (
+  select * from {{ ref('dim_customer') }}
 ),
 
 case_metrics as (
@@ -45,6 +52,13 @@ select
   assets.asset_key,
   assets.asset_id,
   assets.site_key,
+  sites.site_id,
+  sites.site_name,
+  sites.region,
+  sites.country_code,
+  customers.customer_key,
+  customers.customer_id,
+  customers.customer_name,
   assets.asset_name,
   assets.asset_type,
   assets.criticality,
@@ -62,6 +76,8 @@ select
     and coalesce(case_metrics.critical_open_case_count, 0) > 0
   ) or coalesce(order_metrics.downtime_hours, 0) > 72 as is_high_risk
 from assets
+join sites using (site_key)
+join customers using (customer_key)
 left join case_metrics using (asset_key)
 left join order_metrics using (asset_key)
 left join cost_metrics using (asset_key)
