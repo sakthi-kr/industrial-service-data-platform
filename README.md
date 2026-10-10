@@ -1,7 +1,7 @@
-# Industrial Service Data & AI Platform
+# Service Analytics Platform
 
-[![CI](https://github.com/sakthi-kr/industrial-service-data-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/sakthi-kr/industrial-service-data-platform/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/sakthi-kr/industrial-service-data-platform/actions/workflows/codeql.yml/badge.svg)](https://github.com/sakthi-kr/industrial-service-data-platform/actions/workflows/codeql.yml)
+[![CI](https://github.com/sakthi-kr/service-analytics-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/sakthi-kr/service-analytics-platform/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/sakthi-kr/service-analytics-platform/actions/workflows/codeql.yml/badge.svg)](https://github.com/sakthi-kr/service-analytics-platform/actions/workflows/codeql.yml)
 [![Python 3.10–3.12](https://img.shields.io/badge/python-3.10--3.12-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 

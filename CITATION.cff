@@ -1,14 +1,14 @@
 cff-version: 1.2.0
 message: "If you use this project, please cite it using the metadata below."
-title: "Industrial Service Data & AI Platform"
+title: "Service Analytics Platform"
 type: software
 authors:
   - family-names: "Ravichandran"
     given-names: "Sakthi"
 version: 1.0.0
 date-released: 2026-08-06
-url: "https://github.com/sakthi-kr/industrial-service-data-platform"
-repository-code: "https://github.com/sakthi-kr/industrial-service-data-platform"
+url: "https://github.com/sakthi-kr/service-analytics-platform"
+repository-code: "https://github.com/sakthi-kr/service-analytics-platform"
 license: MIT
 keywords:
   - industrial analytics
